@@ -10,6 +10,7 @@ const HomePage: React.FC = () => {
   const height = useAppSelector((state) => state.terminal.height);
   useEffect(() => {
     dispatch({ type: 'settings/connect' });
+    dispatch({ type: 'instance/init' });
   }, []);
 
   return (

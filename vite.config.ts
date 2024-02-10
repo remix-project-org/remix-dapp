@@ -7,9 +7,6 @@ import polyfillNode from 'rollup-plugin-polyfill-node';
 const viteConfig = ({ mode }: any) => {
   process.env = { ...process.env, ...loadEnv(mode, '', '') };
   return defineConfig({
-    // define: {
-    //   'process.env': process.env,
-    // },
     plugins: [react()],
     optimizeDeps: {
       esbuildOptions: {
@@ -28,17 +25,8 @@ const viteConfig = ({ mode }: any) => {
       rollupOptions: {
         plugins: [polyfillNode()],
       },
+      manifest: 'manifest.json',
     },
-    // resolve: {
-    //   alias: {
-    //     events: 'events',
-    //     crypto: 'crypto-browserify',
-    //     stream: 'stream-browserify',
-    //     http: 'stream-http',
-    //     https: 'https-browserify',
-    //     ws: 'xrpl/dist/npm/client/WSWrapper',
-    //   },
-    // },
   });
 };
 
