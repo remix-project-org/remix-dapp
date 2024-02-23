@@ -3,6 +3,8 @@ import { NetworkUI } from './network';
 import { AccountUI } from './account';
 import { GasPriceUI } from './gasPrice';
 import { ValueUI } from './value';
+import { LocaleUI } from './locale';
+import { ThemeUI } from './theme';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useAppSelector } from '../../redux/hooks';
 import CopyToClipboard from '../CopyToClipboard';
@@ -38,6 +40,8 @@ export function SettingsUI() {
       <AccountUI />
       <GasPriceUI />
       <ValueUI />
+      <LocaleUI />
+      <ThemeUI />
     </div>
   );
 }

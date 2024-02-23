@@ -123,7 +123,7 @@ export function ContractGUI(props: any) {
       elVal = elVal.replace(/(^|,\s+|,)(\d+)(\s+,|,|$)/g, '$1"$2"$3'); // replace non quoted number by quoted number
       elVal = elVal.replace(
         /(^|,\s+|,)(0[xX][0-9a-fA-F]+)(\s+,|,|$)/g,
-        '$1"$2"$3',
+        '$1"$2"$3'
       ); // replace non quoted hex string by quoted hex string
       if (elVal) {
         try {
@@ -199,14 +199,19 @@ export function ContractGUI(props: any) {
           tooltipClasses="text-wrap"
           tooltipId="remixUdappInstanceButtonTooltip"
           tooltipText={
-            props.inputs !== '' && basicInput === ''
-              ? intl.formatMessage({ id: 'udapp.tooltipText12' })
-              : buttonOptions.title
+            <div>
+              <span>
+                {props.inputs !== '' && basicInput === ''
+                  ? intl.formatMessage({ id: 'udapp.tooltipText12' })
+                  : buttonOptions.title}
+              </span>
+              <br />
+              <span>{props.funcABI.intro}</span>
+            </div>
           }
         >
           <div
             className="d-flex btn p-0 wrapperElement"
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={handleActionClick}
             data-id={buttonOptions.dataId}
             data-title={buttonOptions.title}

@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <div
-        className="row m-0"
+        className="row m-0 pt-3"
         style={{ height: window.innerHeight - height - 5, overflowY: 'auto' }}
       >
         <div className="col-9 d-inline-block">

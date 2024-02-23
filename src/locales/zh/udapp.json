@@ -39,6 +39,8 @@
   "udapp.addressNotValid": "该地址无效",
   "udapp._comment_account.tsx": "libs/remix-ui/run-tab/src/lib/components/account.tsx",
   "udapp.account": "账户",
+  "udapp.locales": "语言",
+  "udapp.themes": "主题",
   "udapp.signAMessage": "给一个消息签名",
   "udapp.enterAMessageToSign": "输入一个需要签名的消息",
   "udapp.hash": "哈希",

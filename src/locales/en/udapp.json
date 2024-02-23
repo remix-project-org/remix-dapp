@@ -43,6 +43,8 @@
 
   "udapp._comment_account.tsx": "libs/remix-ui/run-tab/src/lib/components/account.tsx",
   "udapp.account": "Account",
+  "udapp.locales": "Language",
+  "udapp.themes": "Themes",
   "udapp.signAMessage": "Sign a message",
   "udapp.enterAMessageToSign": "Enter a message to sign",
   "udapp.hash": "hash",

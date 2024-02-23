@@ -13,6 +13,7 @@ const Model: ModelType = {
     isSuccessful: false,
     error: null,
     selectedAccount: '',
+    selectedLocaleCode: 'en',
   },
   reducers: {
     save(state, { payload }) {
