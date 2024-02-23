@@ -21,9 +21,16 @@ const Model: ModelType = {
     },
   },
   effects: {
-    *connect() {
+    *connect({ payload }, { put }) {
+      const { networkName } = payload;
+      yield put({ type: 'settings/save', payload: { networkName } });
+      const chainId = networkName.match(/\(([^)]+)\)/)[1];
       // @ts-expect-error
       const web3Provider = window.ethereum;
+      yield web3Provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x' + Number(chainId).toString(16) }],
+      });
       yield web3Provider.request({ method: 'eth_requestAccounts' });
       injected.setProvider(web3Provider);
       injected.getAccounts();

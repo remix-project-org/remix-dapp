@@ -28,6 +28,10 @@ const Model: ModelType = {
     *init(_, { put }) {
       const resp = yield axios.get('/instance.json');
       yield put({ type: 'instance/save', payload: resp.data });
+      yield put({
+        type: 'settings/connect',
+        payload: { networkName: resp.data.network },
+      });
     },
     *runTransactions({ payload }, { put, select }) {
       console.log(payload);
