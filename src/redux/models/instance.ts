@@ -5,6 +5,7 @@ import { execution } from '@remix-project/remix-lib';
 import { type ModelType } from '../store';
 import injected from '../../utils/injected';
 import { EventsDecoder } from '../../utils/eventsDecoder';
+import buildData from '../../utils/buildData';
 
 const { txFormat } = execution;
 const eventsDecoder = new EventsDecoder();
@@ -42,26 +43,51 @@ const Model: ModelType = {
         (state) => state.instance
       );
       const value = Web3.utils.toWei(sendValue, sendUnit);
-      const { data } = txFormat.encodeData(
+
+      const { dataHex, error } = buildData(
         payload.funcABI,
-        JSON.parse('[' + payload.inputsValues + ']'),
-        ''
+        payload.inputsValues
       );
+
+      if (error) {
+        yield put({
+          type: 'terminal/log',
+          payload: {
+            message: [`${payload.logMsg} errored: ${error}`],
+            style: 'text-log',
+          },
+        });
+        return;
+      }
       const tx = {
         to: address,
-        data,
+        data: dataHex,
         from: selectedAccount,
         value,
       };
+
+      if (payload.lookupOnly) {
+        yield put({
+          type: 'terminal/log',
+          payload: {
+            message: [`${payload.logMsg}`],
+            style: 'text-log',
+          },
+        });
+      } else {
+        yield put({
+          type: 'terminal/log',
+          payload: {
+            message: [`${payload.logMsg} pending ... `],
+            style: 'text-log',
+          },
+        });
+      }
 
       const resp = yield injected.runTx(
         tx,
         '0x' + new BN(gasLimit, 10).toString(16),
         payload.lookupOnly
-      );
-
-      const journalBlocks = yield select(
-        (state) => state.terminal.journalBlocks
       );
 
       if (payload.lookupOnly) {
@@ -79,70 +105,60 @@ const Model: ModelType = {
         });
 
         yield put({
-          type: 'terminal/save',
+          type: 'terminal/log',
           payload: {
-            journalBlocks: [
-              ...journalBlocks,
+            message: [
               {
-                message: [
-                  {
-                    tx: {
-                      to: tx.to,
-                      isCall: true,
-                      from: tx.from,
-                      envMode: 'injected',
-                      input: tx.data,
-                      hash: 'call' + (tx.from || '') + tx.to + tx.data,
-                    },
-                    resolvedData: {
-                      contractName: name,
-                      to: address,
-                      fn: payload.funcABI.name,
-                      params: eventsDecoder._decodeInputParams(
-                        data?.replace('0x', '').substring(8),
-                        payload.funcABI
-                      ),
-                      decodedReturnValue: txFormat.decodeResponse(
-                        resp,
-                        payload.funcABI
-                      ),
-                    },
-                  },
-                ],
-                style: '',
-                name: 'knownTransaction',
-                provider: 'injected',
+                tx: {
+                  to: tx.to,
+                  isCall: true,
+                  from: tx.from,
+                  envMode: 'injected',
+                  input: tx.data,
+                  hash: 'call' + (tx.from || '') + tx.to + tx.data,
+                },
+                resolvedData: {
+                  contractName: name,
+                  to: address,
+                  fn: payload.funcABI.name,
+                  params: eventsDecoder._decodeInputParams(
+                    dataHex?.replace('0x', '').substring(8),
+                    payload.funcABI
+                  ),
+                  decodedReturnValue: txFormat.decodeResponse(
+                    resp,
+                    payload.funcABI
+                  ),
+                },
               },
             ],
+            style: '',
+            name: 'knownTransaction',
+            provider: 'injected',
           },
         });
       } else {
         yield put({
-          type: 'terminal/save',
+          type: 'terminal/log',
           payload: {
-            journalBlocks: [
-              ...journalBlocks,
+            message: [
               {
-                message: [
-                  {
-                    tx: { ...resp.tx, receipt: resp.receipt },
-                    receipt: resp.receipt,
-                    resolvedData: {
-                      contractName: name,
-                      to: address,
-                      fn: payload.funcABI.name,
-                      params: eventsDecoder._decodeInputParams(
-                        data?.replace('0x', '').substring(8),
-                        payload.funcABI
-                      ),
-                    },
-                  },
-                ],
-                style: '',
-                name: 'knownTransaction',
-                provider: 'injected',
+                tx: { ...resp.tx, receipt: resp.receipt },
+                receipt: resp.receipt,
+                resolvedData: {
+                  contractName: name,
+                  to: address,
+                  fn: payload.funcABI.name,
+                  params: eventsDecoder._decodeInputParams(
+                    dataHex?.replace('0x', '').substring(8),
+                    payload.funcABI
+                  ),
+                },
               },
             ],
+            style: '',
+            name: 'knownTransaction',
+            provider: 'injected',
           },
         });
       }

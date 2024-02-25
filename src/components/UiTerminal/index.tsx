@@ -18,7 +18,7 @@ export interface ClipboardEvent<T = Element> extends SyntheticEvent<T, any> {
 export const RemixUiTerminal = (props: any) => {
   const dispatch = useAppDispatch();
   const { journalBlocks, height, hidden } = useAppSelector(
-    (state) => state.terminal,
+    (state) => state.terminal
   );
 
   const [showTableHash, setShowTableHash] = useState<any[]>([]);
@@ -96,7 +96,9 @@ export const RemixUiTerminal = (props: any) => {
                 }
               >
                 <i
-                  className={`mx-2 remix_ui_terminal_toggleTerminal fas ${!hidden ? 'fa-angle-double-down' : 'fa-angle-double-up'}`}
+                  className={`mx-2 remix_ui_terminal_toggleTerminal fas ${
+                    !hidden ? 'fa-angle-double-down' : 'fa-angle-double-up'
+                  }`}
                   data-id="terminalToggleIcon"
                   onClick={handleToggleTerminal}
                 ></i>
@@ -116,16 +118,6 @@ export const RemixUiTerminal = (props: any) => {
                   <i className="fas fa-ban" aria-hidden="true"></i>
                 </CustomTooltip>
               </div>
-              <CustomTooltip
-                placement="top"
-                tooltipId="terminalClear"
-                tooltipClasses="text-nowrap"
-                tooltipText={
-                  <FormattedMessage id="terminal.pendingTransactions" />
-                }
-              >
-                <div className="mx-2">0</div>
-              </CustomTooltip>
             </div>
           </div>
           <div
@@ -230,7 +222,7 @@ export const RemixUiTerminal = (props: any) => {
                                     msg ? msg.toString() : null,
                                     () => {
                                       scrollToBottom();
-                                    },
+                                    }
                                   );
                                 }}
                                 className={x.style}

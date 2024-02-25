@@ -4,8 +4,7 @@ import * as remixLib from '@remix-project/remix-lib';
 import { CopyToClipboard } from '../CopyToClipboard';
 import { CustomTooltip } from '../CustomTooltip';
 
-const txFormat = remixLib.execution.txFormat;
-const txHelper = remixLib.execution.txHelper;
+const { txFormat, txHelper } = remixLib.execution;
 export function ContractGUI(props: any) {
   const [title, setTitle] = useState<string>('');
   const [basicInput, setBasicInput] = useState<string>('');
@@ -147,8 +146,7 @@ export function ContractGUI(props: any) {
     const inputString = basicInput;
 
     if (inputString) {
-      const inputJSON =
-        remixLib.execution.txFormat.parseFunctionParams(inputString);
+      const inputJSON = txFormat.parseFunctionParams(inputString);
       const multiInputs = multiFields.current as HTMLInputElement[];
 
       for (let k = 0; k < multiInputs.length; k++) {

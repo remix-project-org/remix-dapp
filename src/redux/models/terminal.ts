@@ -8,7 +8,19 @@ const Model: ModelType = {
       return { ...state, ...payload };
     },
   },
-  effects: {},
+  effects: {
+    *log({ payload }, { select, put }) {
+      const journalBlocks = yield select(
+        (state) => state.terminal.journalBlocks
+      );
+      yield put({
+        type: 'terminal/save',
+        payload: {
+          journalBlocks: [...journalBlocks, payload],
+        },
+      });
+    },
+  },
 };
 
 export default Model;
