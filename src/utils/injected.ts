@@ -76,7 +76,7 @@ export class InjectedProvider {
   }
 
   setProvider(
-    provider: string | SupportedProviders<EthExecutionAPI> | undefined,
+    provider: string | SupportedProviders<EthExecutionAPI> | undefined
   ) {
     web3.setProvider(provider);
   }
@@ -140,8 +140,8 @@ export class InjectedProvider {
             (
               toBigInt(network.lastBlock.baseFeePerGas) +
               toBigInt(network.lastBlock.baseFeePerGas) / BigInt(3)
-            ).toString(),
-          ),
+            ).toString()
+          )
         );
       } else {
         txCopy.type = '0x1';
@@ -155,7 +155,7 @@ export class InjectedProvider {
       return await this._executeTx(tx, network);
     } catch (error) {
       console.log(error);
-      return error;
+      return { error };
     }
   }
 
@@ -201,19 +201,19 @@ export class InjectedProvider {
       this.blockGasLimit = block?.gasLimit
         ? Math.floor(
             Number(web3.utils.toNumber(block.gasLimit)) -
-              (5 * Number(web3.utils.toNumber(block.gasLimit))) / 1024,
+              (5 * Number(web3.utils.toNumber(block.gasLimit))) / 1024
           )
         : web3.utils.toNumber(this.blockGasLimitDefault);
       this.lastBlock = block;
       try {
         this.currentFork = execution.forkAt(
           await web3.eth.net.getId(),
-          block.number,
+          block.number
         );
       } catch (e) {
         this.currentFork = 'merge';
         console.log(
-          `unable to detect fork, defaulting to ${this.currentFork}..`,
+          `unable to detect fork, defaulting to ${this.currentFork}..`
         );
         console.error(e);
       }
@@ -243,7 +243,7 @@ export class InjectedProvider {
       const { transactionHash } = await web3.eth.sendTransaction(
         tx,
         undefined,
-        { checkRevertBeforeSending: false, ignoreGasPricing: true },
+        { checkRevertBeforeSending: false, ignoreGasPricing: true }
       );
       const receipt = await web3.eth.getTransactionReceipt(transactionHash, {
         number: FMT_NUMBER.NUMBER,
@@ -260,11 +260,11 @@ export class InjectedProvider {
         }),
         transactionHash: receipt ? receipt.transactionHash : null,
       };
-    } catch (err: any) {
+    } catch (error: any) {
       console.log(
-        `Send transaction failed: ${err.message} . if you use an injected provider, please check it is properly unlocked. `,
+        `Send transaction failed: ${error.message} . if you use an injected provider, please check it is properly unlocked. `
       );
-      return null;
+      return { error };
     }
   }
 }

@@ -90,6 +90,17 @@ const Model: ModelType = {
         payload.lookupOnly
       );
 
+      if (resp.error) {
+        yield put({
+          type: 'terminal/log',
+          payload: {
+            message: [`${payload.logMsg} errored: ${resp.error}`],
+            style: 'text-log',
+          },
+        });
+        return;
+      }
+
       if (payload.lookupOnly) {
         yield put({
           type: 'instance/save',
