@@ -178,17 +178,16 @@ export function ContractGUI(props: any) {
   };
 
   return (
-    <div
-      className={`udapp_contractProperty ${
-        (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
-        props.funcABI.type === 'fallback' ||
-        props.funcABI.type === 'receive'
-          ? 'udapp_hasArgs'
-          : ''
-      }`}
-    >
+    <div className={`udapp_contractProperty`}>
+      {props.funcABI.title && <div>Title: {props.funcABI.title}</div>}
       <div
-        className="udapp_contractActionsContainerSingle pt-2"
+        className={`udapp_contractActionsContainerSingle pt-2 ${
+          (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
+          props.funcABI.type === 'fallback' ||
+          props.funcABI.type === 'receive'
+            ? 'udapp_hasArgs'
+            : ''
+        }`}
         style={{ display: toggleContainer ? 'none' : 'flex' }}
       >
         <CustomTooltip
@@ -197,15 +196,9 @@ export function ContractGUI(props: any) {
           tooltipClasses="text-wrap"
           tooltipId="remixUdappInstanceButtonTooltip"
           tooltipText={
-            <div>
-              <span>
-                {props.inputs !== '' && basicInput === ''
-                  ? intl.formatMessage({ id: 'udapp.tooltipText12' })
-                  : buttonOptions.title}
-              </span>
-              <br />
-              <span>{props.funcABI.intro}</span>
-            </div>
+            props.inputs !== '' && basicInput === ''
+              ? intl.formatMessage({ id: 'udapp.tooltipText12' })
+              : buttonOptions.title
           }
         >
           <div
@@ -358,6 +351,9 @@ export function ContractGUI(props: any) {
           </div>
         </div>
       </div>
+      {props.funcABI.intro && (
+        <div className="pt-2">Instructions: {props.funcABI.intro}</div>
+      )}
     </div>
   );
 }
