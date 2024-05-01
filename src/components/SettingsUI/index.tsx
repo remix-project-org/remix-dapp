@@ -12,7 +12,9 @@ import { shortenAddress } from '../UiHelper';
 
 export function SettingsUI() {
   const intl = useIntl();
-  const { balance, name, address } = useAppSelector((state) => state.instance);
+  const { balance, name, address, shareTo } = useAppSelector(
+    (state) => state.instance
+  );
   const getBoxPositionOnWindowCenter = (width: number, height: number) => ({
     left:
       window.outerWidth / 2 +
@@ -35,30 +37,38 @@ export function SettingsUI() {
   const shareTitle = encodeURIComponent('Hello everyone, this is my dapp!');
   return (
     <div className="udapp_settings">
-      <i
-        className="fab fa-twitter btn"
-        onClick={() => {
-          window.open(
-            `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`,
-            '',
-            Object.keys(windowConfig)
-              .map((key) => `${key}=${windowConfig[key]}`)
-              .join(', ')
-          );
-        }}
-      />
-      <i
-        className="fab fa-facebook btn"
-        onClick={() => {
-          window.open(
-            `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-            '',
-            Object.keys(windowConfig)
-              .map((key) => `${key}=${windowConfig[key]}`)
-              .join(', ')
-          );
-        }}
-      />
+      {shareTo && (
+        <>
+          {shareTo.includes('twitter') && (
+            <i
+              className="fab fa-twitter btn"
+              onClick={() => {
+                window.open(
+                  `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`,
+                  '',
+                  Object.keys(windowConfig)
+                    .map((key) => `${key}=${windowConfig[key]}`)
+                    .join(', ')
+                );
+              }}
+            />
+          )}
+          {shareTo.includes('facebook') && (
+            <i
+              className="fab fa-facebook btn"
+              onClick={() => {
+                window.open(
+                  `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+                  '',
+                  Object.keys(windowConfig)
+                    .map((key) => `${key}=${windowConfig[key]}`)
+                    .join(', ')
+                );
+              }}
+            />
+          )}
+        </>
+      )}
       <NetworkUI />
       <div className="udapp_title pb-0 alert alert-secondary">
         <div className="input-group udapp_nameNbuts">

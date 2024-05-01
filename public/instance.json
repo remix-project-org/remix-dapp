@@ -148,5 +148,6 @@
       "type": "function",
       "id": "0x18160ddd"
     }
-  ]
+  ],
+  "shareTo": ["twitter", "facebook"]
 }
