@@ -18,10 +18,10 @@ const HomePage: React.FC = () => {
         className="row m-0 pt-3"
         style={{ height: window.innerHeight - height - 5, overflowY: 'auto' }}
       >
-        <div className="col-9 d-inline-block">
+        <div className="col-9 d-inline-block pr-0">
           <UniversalDappUI />
         </div>
-        <div className="col-3 d-inline-block">
+        <div className="col-3 d-inline-block pl-0">
           <SettingsUI />
         </div>
       </div>

@@ -29,7 +29,7 @@ export function UniversalDappUI(props: any) {
   const dispatch = useAppDispatch();
 
   const address = instance.address;
-  const contractABI = instance.abi;
+  const { abi: contractABI, items, containers } = instance;
   const [expandPath, setExpandPath] = useState<string[]>([]);
 
   const runTransaction = (
@@ -163,77 +163,160 @@ export function UniversalDappUI(props: any) {
 
   return (
     <div className="row m-0">
-      {contractABI?.map((funcABI: any, index: any) => {
-        if (funcABI.type !== 'function') return null;
-        const isConstant =
-          funcABI.constant !== undefined ? funcABI.constant : false;
-        const lookupOnly =
-          funcABI.stateMutability === 'view' ||
-          funcABI.stateMutability === 'pure' ||
-          isConstant;
-        const inputs = getFuncABIInputs(funcABI);
+      {containers
+        ? containers.map((id: any) => {
+            return (
+              <div className="col" key={id}>
+                {items[id].map((item: any, index: any) => {
+                  const funcABI = contractABI[item];
+                  if (funcABI.type !== 'function') return null;
+                  const isConstant =
+                    funcABI.constant !== undefined ? funcABI.constant : false;
+                  const lookupOnly =
+                    funcABI.stateMutability === 'view' ||
+                    funcABI.stateMutability === 'pure' ||
+                    isConstant;
+                  const inputs = getFuncABIInputs(funcABI);
+                  return (
+                    <div
+                      className="udapp_cActionsWrapper bg-light mb-2"
+                      data-id="universalDappUiContractActionWrapper"
+                    >
+                      <div className="udapp_contractActionsContainer">
+                        <div>
+                          {funcABI.title && <div>Title: {funcABI.title}</div>}
+                          <ContractGUI
+                            funcABI={funcABI}
+                            clickCallBack={(
+                              valArray: { name: string; type: string }[],
+                              inputsValues: string
+                            ) => {
+                              runTransaction(
+                                lookupOnly,
+                                funcABI,
+                                valArray,
+                                inputsValues,
+                                index
+                              );
+                            }}
+                            inputs={inputs}
+                            lookupOnly={lookupOnly}
+                            key={item}
+                          />
+                          {lookupOnly && (
+                            <div className="udapp_value" data-id="udapp_value">
+                              <TreeView id="treeView">
+                                {Object.keys(
+                                  instance.decodedResponse || {}
+                                ).map((key) => {
+                                  const funcIndex = index.toString();
+                                  const response =
+                                    instance.decodedResponse[key];
 
-        return (
-          <div
-            key={index}
-            className={`instance udapp_instance udapp_run-instance border-dark col-6`}
-            data-shared="universalDappUiInstance"
-          >
-            <div
-              className="udapp_cActionsWrapper bg-light mb-2"
-              data-id="universalDappUiContractActionWrapper"
-            >
-              <div className="udapp_contractActionsContainer">
-                <div>
-                  <ContractGUI
-                    funcABI={funcABI}
-                    clickCallBack={(
-                      valArray: { name: string; type: string }[],
-                      inputsValues: string
-                    ) => {
-                      runTransaction(
-                        lookupOnly,
-                        funcABI,
-                        valArray,
-                        inputsValues,
-                        index
-                      );
-                    }}
-                    inputs={inputs}
-                    lookupOnly={lookupOnly}
-                    key={index}
-                  />
-                  {lookupOnly && (
-                    <div className="udapp_value" data-id="udapp_value">
-                      <TreeView id="treeView">
-                        {Object.keys(instance.decodedResponse || {}).map(
-                          (key) => {
-                            const funcIndex = index.toString();
-                            const response = instance.decodedResponse[key];
-
-                            return key === funcIndex
-                              ? Object.keys(response || {}).map(
-                                  (innerkey, _index) => {
-                                    return renderData(
-                                      instance.decodedResponse[key][innerkey],
-                                      response,
-                                      innerkey,
-                                      innerkey
-                                    );
-                                  }
-                                )
-                              : null;
-                          }
-                        )}
-                      </TreeView>
+                                  return key === funcIndex
+                                    ? Object.keys(response || {}).map(
+                                        (innerkey, _index) => {
+                                          return renderData(
+                                            instance.decodedResponse[key][
+                                              innerkey
+                                            ],
+                                            response,
+                                            innerkey,
+                                            innerkey
+                                          );
+                                        }
+                                      )
+                                    : null;
+                                })}
+                              </TreeView>
+                            </div>
+                          )}
+                          {funcABI.intro && (
+                            <div className="pt-2">
+                              Instructions: {funcABI.intro}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  )}
+                  );
+                })}
+              </div>
+            );
+          })
+        : contractABI?.map((funcABI: any, index: any) => {
+            if (funcABI.type !== 'function') return null;
+            const isConstant =
+              funcABI.constant !== undefined ? funcABI.constant : false;
+            const lookupOnly =
+              funcABI.stateMutability === 'view' ||
+              funcABI.stateMutability === 'pure' ||
+              isConstant;
+            const inputs = getFuncABIInputs(funcABI);
+
+            return (
+              <div
+                key={index}
+                className={`instance udapp_instance udapp_run-instance border-dark col-6`}
+                data-shared="universalDappUiInstance"
+              >
+                <div
+                  className="udapp_cActionsWrapper bg-light mb-2"
+                  data-id="universalDappUiContractActionWrapper"
+                >
+                  <div className="udapp_contractActionsContainer">
+                    <div>
+                      <ContractGUI
+                        funcABI={funcABI}
+                        clickCallBack={(
+                          valArray: { name: string; type: string }[],
+                          inputsValues: string
+                        ) => {
+                          runTransaction(
+                            lookupOnly,
+                            funcABI,
+                            valArray,
+                            inputsValues,
+                            index
+                          );
+                        }}
+                        inputs={inputs}
+                        lookupOnly={lookupOnly}
+                        key={index}
+                      />
+                      {lookupOnly && (
+                        <div className="udapp_value" data-id="udapp_value">
+                          <TreeView id="treeView">
+                            {Object.keys(instance.decodedResponse || {}).map(
+                              (key) => {
+                                const funcIndex = index.toString();
+                                const response = instance.decodedResponse[key];
+
+                                return key === funcIndex
+                                  ? Object.keys(response || {}).map(
+                                      (innerkey, _index) => {
+                                        return renderData(
+                                          instance.decodedResponse[key][
+                                            innerkey
+                                          ],
+                                          response,
+                                          innerkey,
+                                          innerkey
+                                        );
+                                      }
+                                    )
+                                  : null;
+                              }
+                            )}
+                          </TreeView>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        );
-      })}
+            );
+          })}
     </div>
   );
 }

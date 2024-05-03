@@ -178,16 +178,17 @@ export function ContractGUI(props: any) {
   };
 
   return (
-    <div className={`udapp_contractProperty`}>
-      {props.funcABI.title && <div>Title: {props.funcABI.title}</div>}
+    <div
+      className={`udapp_contractProperty ${
+        (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
+        props.funcABI.type === 'fallback' ||
+        props.funcABI.type === 'receive'
+          ? 'udapp_hasArgs'
+          : ''
+      }`}
+    >
       <div
-        className={`udapp_contractActionsContainerSingle pt-2 ${
-          (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
-          props.funcABI.type === 'fallback' ||
-          props.funcABI.type === 'receive'
-            ? 'udapp_hasArgs'
-            : ''
-        }`}
+        className="udapp_contractActionsContainerSingle pt-2"
         style={{ display: toggleContainer ? 'none' : 'flex' }}
       >
         <CustomTooltip
@@ -351,9 +352,6 @@ export function ContractGUI(props: any) {
           </div>
         </div>
       </div>
-      {props.funcABI.intro && (
-        <div className="pt-2">Instructions: {props.funcABI.intro}</div>
-      )}
     </div>
   );
 }
