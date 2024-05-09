@@ -20,7 +20,9 @@ export const RemixUiTerminal = (props: any) => {
   const { journalBlocks, height, hidden } = useAppSelector(
     (state) => state.terminal
   );
-  const { shortname } = useAppSelector((state) => state.instance);
+  const { shortname, name, address } = useAppSelector(
+    (state) => state.instance
+  );
 
   const [showTableHash, setShowTableHash] = useState<any[]>([]);
   const [display, setDisplay] = useState('transaction');
@@ -141,8 +143,12 @@ export const RemixUiTerminal = (props: any) => {
                   }}
                 >
                   <CommentCount
-                    shortname="remix-dapp"
-                    config={{ url: window.origin }}
+                    shortname={shortname}
+                    config={{
+                      url: window.origin,
+                      identifier: address,
+                      title: name,
+                    }}
                   >
                     Comments
                   </CommentCount>
@@ -326,7 +332,11 @@ export const RemixUiTerminal = (props: any) => {
               <div className={`p-3 ${display === 'comment' ? '' : 'd-none'}`}>
                 <DiscussionEmbed
                   shortname={shortname}
-                  config={{ url: window.origin }}
+                  config={{
+                    url: window.origin,
+                    identifier: address,
+                    title: name,
+                  }}
                 />
               </div>
             )}
