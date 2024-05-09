@@ -350,5 +350,6 @@
   "shareTo": [
     "twitter",
     "facebook"
-  ]
+  ],
+  "shortname": "remix-dapp"
 }

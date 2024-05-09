@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, type SyntheticEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
-
+import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import { CustomTooltip } from '../CustomTooltip';
 import RenderCall from './RenderCall';
 import RenderKnownTransactions from './RenderKnownTransactions';
@@ -20,8 +20,10 @@ export const RemixUiTerminal = (props: any) => {
   const { journalBlocks, height, hidden } = useAppSelector(
     (state) => state.terminal
   );
+  const { shortname } = useAppSelector((state) => state.instance);
 
   const [showTableHash, setShowTableHash] = useState<any[]>([]);
+  const [display, setDisplay] = useState('transaction');
 
   const messagesEndRef = useRef<any>(null);
   const typeWriterIndexes = useRef<any>([]);
@@ -104,7 +106,7 @@ export const RemixUiTerminal = (props: any) => {
                 ></i>
               </CustomTooltip>
               <div
-                className="mx-2 remix_ui_terminal_console"
+                className="mx-2 cursor_pointer"
                 id="clearConsole"
                 data-id="terminalClearConsole"
                 onClick={handleClearConsole}
@@ -118,6 +120,29 @@ export const RemixUiTerminal = (props: any) => {
                   <i className="fas fa-ban" aria-hidden="true"></i>
                 </CustomTooltip>
               </div>
+              <div
+                className="pl-2 cursor_pointer"
+                onClick={() => {
+                  setDisplay('transaction');
+                }}
+              >
+                {journalBlocks.length} Transactions
+              </div>
+              {shortname && (
+                <div
+                  className="pl-3 cursor_pointer"
+                  onClick={() => {
+                    setDisplay('comment');
+                  }}
+                >
+                  <CommentCount
+                    shortname="remix-dapp"
+                    config={{ url: window.origin }}
+                  >
+                    Comments
+                  </CommentCount>
+                </div>
+              )}
             </div>
           </div>
           <div
@@ -125,7 +150,11 @@ export const RemixUiTerminal = (props: any) => {
             className="remix_ui_terminal_container d-flex h-100 m-0 flex-column"
             data-id="terminalContainer"
           >
-            <div className="position-relative d-flex flex-column-reverse h-100">
+            <div
+              className={`position-relative flex-column-reverse h-100 ${
+                display === 'transaction' ? 'd-flex' : 'd-none'
+              }`}
+            >
               <div
                 id="journal"
                 className="remix_ui_terminal_journal d-flex flex-column pt-3 pb-4 px-2 mx-2 mr-0"
@@ -288,6 +317,14 @@ export const RemixUiTerminal = (props: any) => {
                 <div ref={messagesEndRef} />
               </div>
             </div>
+            {shortname && (
+              <div className={`p-3 ${display === 'comment' ? '' : 'd-none'}`}>
+                <DiscussionEmbed
+                  shortname={shortname}
+                  config={{ url: window.origin }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
