@@ -146,7 +146,7 @@ export const RemixUiTerminal = (props: any) => {
                     shortname={shortname}
                     config={{
                       url: window.origin,
-                      identifier: address,
+                      identifier: `${address}|${document.domain}`,
                       title: name,
                     }}
                   >
@@ -334,7 +334,7 @@ export const RemixUiTerminal = (props: any) => {
                   shortname={shortname}
                   config={{
                     url: window.origin,
-                    identifier: address,
+                    identifier: `${address}|${document.domain}`,
                     title: name,
                   }}
                 />
