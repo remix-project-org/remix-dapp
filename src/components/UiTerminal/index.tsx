@@ -126,7 +126,12 @@ export const RemixUiTerminal = (props: any) => {
                   setDisplay('transaction');
                 }}
               >
-                {journalBlocks.length} Transactions
+                {
+                  journalBlocks.filter(
+                    (item: any) => item.name === 'knownTransaction'
+                  ).length
+                }{' '}
+                Transactions
               </div>
               {shortname && (
                 <div
