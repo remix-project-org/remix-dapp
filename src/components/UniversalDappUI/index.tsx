@@ -167,8 +167,8 @@ export function UniversalDappUI(props: any) {
         ? containers.map((id: any) => {
             return (
               <div className="col" key={id}>
-                {items[id].map((item: any, index: any) => {
-                  const funcABI = contractABI[item];
+                {items[id].map((funcId: any, index: any) => {
+                  const funcABI = contractABI[funcId];
                   if (funcABI.type !== 'function') return null;
                   const isConstant =
                     funcABI.constant !== undefined ? funcABI.constant : false;
@@ -196,12 +196,12 @@ export function UniversalDappUI(props: any) {
                                 funcABI,
                                 valArray,
                                 inputsValues,
-                                index
+                                funcId
                               );
                             }}
                             inputs={inputs}
                             lookupOnly={lookupOnly}
-                            key={item}
+                            key={funcId}
                           />
                           {lookupOnly && (
                             <div className="udapp_value" data-id="udapp_value">
@@ -209,7 +209,7 @@ export function UniversalDappUI(props: any) {
                                 {Object.keys(
                                   instance.decodedResponse || {}
                                 ).map((key) => {
-                                  const funcIndex = index.toString();
+                                  const funcIndex = funcId;
                                   const response =
                                     instance.decodedResponse[key];
 
