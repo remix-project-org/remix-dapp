@@ -1,6 +1,6 @@
 {
   "name": "MyToken",
-  "address": "0x43ca9BD3cd6D73eea453A464bb8e8f39bc363704",
+  "address": "0x638f62fCec18Fd8D284f5902d201B64499c8D397",
   "network": "Sepolia (11155111) network",
   "abi": {
     "0x095ea7b3": {
