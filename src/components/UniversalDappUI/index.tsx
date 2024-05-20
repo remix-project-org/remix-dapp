@@ -184,7 +184,7 @@ export function UniversalDappUI(props: any) {
                     >
                       <div className="udapp_contractActionsContainer">
                         <div>
-                          {funcABI.title && <div>Title: {funcABI.title}</div>}
+                          {funcABI.title && <h1>{funcABI.title}</h1>}
                           <ContractGUI
                             funcABI={funcABI}
                             clickCallBack={(
@@ -203,6 +203,11 @@ export function UniversalDappUI(props: any) {
                             lookupOnly={lookupOnly}
                             key={funcId}
                           />
+                          {funcABI.intro && (
+                            <div className="pt-2 udapp_intro">
+                              {funcABI.intro}
+                            </div>
+                          )}
                           {lookupOnly && (
                             <div className="udapp_value" data-id="udapp_value">
                               <TreeView id="treeView">
@@ -229,11 +234,6 @@ export function UniversalDappUI(props: any) {
                                     : null;
                                 })}
                               </TreeView>
-                            </div>
-                          )}
-                          {funcABI.intro && (
-                            <div className="pt-2">
-                              Instructions: {funcABI.intro}
                             </div>
                           )}
                         </div>
