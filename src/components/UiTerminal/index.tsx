@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, type SyntheticEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { CommentCount, DiscussionEmbed } from 'disqus-react';
+// import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import { CustomTooltip } from '../CustomTooltip';
 import RenderCall from './RenderCall';
 import RenderKnownTransactions from './RenderKnownTransactions';
@@ -122,7 +122,7 @@ export const RemixUiTerminal = (props: any) => {
                   <i className="fas fa-ban" aria-hidden="true"></i>
                 </CustomTooltip>
               </div>
-              <div
+              {/* <div
                 className="pl-2 cursor_pointer"
                 onClick={() => {
                   setDisplay('transaction');
@@ -153,7 +153,7 @@ export const RemixUiTerminal = (props: any) => {
                     Comments
                   </CommentCount>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
           <div
@@ -328,7 +328,7 @@ export const RemixUiTerminal = (props: any) => {
                 <div ref={messagesEndRef} />
               </div>
             </div>
-            {shortname && (
+            {/* {shortname && (
               <div className={`p-3 ${display === 'comment' ? '' : 'd-none'}`}>
                 <DiscussionEmbed
                   shortname={shortname}
@@ -339,7 +339,7 @@ export const RemixUiTerminal = (props: any) => {
                   }}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
