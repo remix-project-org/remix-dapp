@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CustomTooltip } from '../CustomTooltip';
 import { FormattedMessage } from 'react-intl';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { AppContext } from '../../contexts';
 
 export function GasPriceUI() {
-  const dispatch = useAppDispatch();
+  const { appState, dispatch } = useContext(AppContext);
   const handleGasLimit = (e: any) => {
     dispatch({ type: 'settings/save', payload: { gasLimit: e.target.value } });
   };
 
-  const gasLimit = useAppSelector((state) => state.settings.gasLimit);
+  const gasLimit = appState.settings.gasLimit;
 
   return (
     <div className="udapp_crow">

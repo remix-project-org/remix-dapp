@@ -7,7 +7,7 @@ import Web3, {
 import { addHexPrefix, toBuffer } from '@ethereumjs/util';
 import { execution } from '@remix-project/remix-lib';
 import { toBigInt } from 'web3-utils';
-import { store } from '../redux/store';
+import { saveSettings } from '../actions';
 
 export const shortenAddress = (address: string, etherBalance?: string) => {
   const len = address.length;
@@ -82,7 +82,7 @@ export class InjectedProvider {
   }
 
   getAccounts() {
-    store.dispatch({ type: 'settings/save', payload: { isRequesting: true } });
+    saveSettings({ isRequesting: true });
     void web3.eth
       .getAccounts()
       .then(async (accounts) => {
@@ -91,17 +91,11 @@ export class InjectedProvider {
           const balance = await this.getBalanceInEther(account);
           loadedAccounts[account] = shortenAddress(account, balance);
         }
-        store.dispatch({
-          type: 'settings/save',
-          payload: { loadedAccounts, isRequesting: false },
-        });
+        saveSettings({ loadedAccounts, isRequesting: false });
       })
       .catch((err) => {
         console.log(err);
-        store.dispatch({
-          type: 'settings/save',
-          payload: { isRequesting: false },
-        });
+        saveSettings({ isRequesting: false });
       });
   }
 

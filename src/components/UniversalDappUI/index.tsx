@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as remixLib from '@remix-project/remix-lib';
 import { ContractGUI } from '../ContractGUI';
 import { TreeView, TreeViewItem } from '../TreeView';
 import { BN } from 'bn.js';
 import './index.css';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { AppContext } from '../../contexts';
+import { runTransactions } from '../../actions';
 
 const txHelper = remixLib.execution.txHelper;
 
@@ -25,8 +26,8 @@ export interface FuncABI {
 }
 
 export function UniversalDappUI(props: any) {
-  const instance = useAppSelector((state) => state.instance);
-  const dispatch = useAppDispatch();
+  const { appState } = useContext(AppContext);
+  const instance = appState.instance;
 
   const address = instance.address;
   const { abi: contractABI, items, containers } = instance;
@@ -45,18 +46,15 @@ export function UniversalDappUI(props: any) {
       instance.name
     }.${functionName}`;
 
-    dispatch({
-      type: 'instance/runTransactions',
-      payload: {
-        lookupOnly,
-        funcABI,
-        inputsValues,
-        name: instance.name,
-        contractABI,
-        address,
-        logMsg,
-        funcIndex,
-      },
+    runTransactions({
+      lookupOnly,
+      funcABI,
+      inputsValues,
+      name: instance.name,
+      contractABI,
+      address,
+      logMsg,
+      funcIndex,
     });
   };
 

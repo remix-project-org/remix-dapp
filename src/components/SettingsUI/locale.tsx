@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { AppContext } from '../../contexts';
 
 const localeMap: Record<string, string> = {
   zh: 'Chinese Simplified - 简体中文',
@@ -11,8 +11,8 @@ const localeMap: Record<string, string> = {
 };
 
 export function LocaleUI() {
-  const dispatch = useAppDispatch();
-  const { selectedLocaleCode } = useAppSelector((state) => state.settings);
+  const { appState, dispatch } = useContext(AppContext);
+  const { selectedLocaleCode } = appState.settings;
   const localeCodeList = Object.keys(localeMap);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export function LocaleUI() {
 
   const setLocaleCode = (localeCode: string) => {
     dispatch({
-      type: 'settings/save',
+      type: 'SET_SETTINGS',
       payload: { selectedLocaleCode: localeCode },
     });
     localStorage.setItem('selectedLocaleCode', localeCode);

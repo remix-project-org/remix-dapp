@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NetworkUI } from './network';
 import { AccountUI } from './account';
 import { GasPriceUI } from './gasPrice';
@@ -6,15 +6,14 @@ import { ValueUI } from './value';
 import { LocaleUI } from './locale';
 import { ThemeUI } from './theme';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useAppSelector } from '../../redux/hooks';
 import CopyToClipboard from '../CopyToClipboard';
 import { shortenAddress } from '../UiHelper';
+import { AppContext } from '../../contexts';
 
 export function SettingsUI() {
   const intl = useIntl();
-  const { balance, name, address, shareTo } = useAppSelector(
-    (state) => state.instance
-  );
+  const { appState } = useContext(AppContext);
+  const { balance, name, address, shareTo } = appState.instance;
   const getBoxPositionOnWindowCenter = (width: number, height: number) => ({
     left:
       window.outerWidth / 2 +

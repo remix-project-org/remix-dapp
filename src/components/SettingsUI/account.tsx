@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { CopyToClipboard } from '../CopyToClipboard';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { AppContext } from '../../contexts';
 
 export function AccountUI() {
   const intl = useIntl();
-  const dispatch = useAppDispatch();
-  const { selectedAccount, loadedAccounts, isRequesting } = useAppSelector(
-    (state) => state.settings,
-  );
+  const { appState, dispatch } = useContext(AppContext);
+  const { selectedAccount, loadedAccounts, isRequesting } = appState.settings;
   const accounts = Object.keys(loadedAccounts);
 
   const setAccount = (account: string) => {
-    dispatch({ type: 'settings/save', payload: { selectedAccount: account } });
+    dispatch({ type: 'SET_SETTINGS', payload: { selectedAccount: account } });
   };
 
   useEffect(() => {

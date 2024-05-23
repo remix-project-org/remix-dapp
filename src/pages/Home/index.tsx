@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { UniversalDappUI } from '../../components/UniversalDappUI';
 import { SettingsUI } from '../../components/SettingsUI';
 import RemixUiTerminal from '../../components/UiTerminal';
 import DragBar from '../../components/DragBar';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { AppContext } from '../../contexts';
+import { initInstance } from '../../actions';
 
 const HomePage: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const height = useAppSelector((state) => state.terminal.height);
+  const { appState } = useContext(AppContext);
+  const height = appState.terminal.height;
   useEffect(() => {
-    dispatch({ type: 'instance/init' });
+    initInstance();
   }, []);
 
   return (

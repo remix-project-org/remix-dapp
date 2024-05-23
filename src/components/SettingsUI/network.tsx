@@ -1,8 +1,9 @@
-import React from 'react';
-import { useAppSelector } from '../../redux/hooks';
+import React, { useContext } from 'react';
+import { AppContext } from '../../contexts';
 
 export function NetworkUI() {
-  const networkName = useAppSelector((state) => state.settings.networkName);
+  const { appState } = useContext(AppContext);
+  const networkName = appState.settings.networkName;
   return (
     <div className="">
       <div className="udapp_settingsLabel"></div>

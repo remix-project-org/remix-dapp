@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
 import { IntlProvider } from 'react-intl';
-import { useAppSelector } from './redux/hooks';
+import { AppContext } from './contexts';
+import { appInitialState, appReducer } from './reducers/state';
+import { initDispatch, updateState } from './actions';
 import enJson from './locales/en';
 import zhJson from './locales/zh';
 import esJson from './locales/es';
@@ -18,16 +20,29 @@ const localeMap: Record<string, any> = {
 };
 
 function App(): JSX.Element {
-  const selectedLocaleCode = useAppSelector(
-    (state) => state.settings.selectedLocaleCode
-  );
+  const [appState, dispatch] = useReducer(appReducer, appInitialState);
+  const selectedLocaleCode = appState.settings.selectedLocaleCode;
+  useEffect(() => {
+    updateState(appState);
+  }, [appState]);
+  useEffect(() => {
+    initDispatch(dispatch);
+    updateState(appState);
+  }, []);
   return (
-    <IntlProvider
-      locale={selectedLocaleCode}
-      messages={localeMap[selectedLocaleCode]}
+    <AppContext.Provider
+      value={{
+        dispatch,
+        appState,
+      }}
     >
-      <RouterProvider router={router} />
-    </IntlProvider>
+      <IntlProvider
+        locale={selectedLocaleCode}
+        messages={localeMap[selectedLocaleCode]}
+      >
+        <RouterProvider router={router} />
+      </IntlProvider>
+    </AppContext.Provider>
   );
 }
 

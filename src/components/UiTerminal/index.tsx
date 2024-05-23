@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, type SyntheticEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  type SyntheticEvent,
+  useContext,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
 // import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import { CustomTooltip } from '../CustomTooltip';
@@ -8,21 +14,17 @@ import parse from 'html-react-parser';
 
 import { KNOWN_TRANSACTION } from './types';
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import './index.css';
+import { AppContext } from '../../contexts';
 
 export interface ClipboardEvent<T = Element> extends SyntheticEvent<T, any> {
   clipboardData: DataTransfer;
 }
 
 export const RemixUiTerminal = (props: any) => {
-  const dispatch = useAppDispatch();
-  const { journalBlocks, height, hidden } = useAppSelector(
-    (state) => state.terminal
-  );
-  const { shortname, name, address } = useAppSelector(
-    (state) => state.instance
-  );
+  const { appState, dispatch } = useContext(AppContext);
+  const { journalBlocks, height, hidden } = appState.terminal;
+  const { shortname, name, address } = appState.instance;
 
   const [showTableHash, setShowTableHash] = useState<any[]>([]);
   const [display, setDisplay] = useState('transaction');
@@ -44,7 +46,7 @@ export const RemixUiTerminal = (props: any) => {
 
   const handleClearConsole = () => {
     typeWriterIndexes.current = [];
-    dispatch({ type: 'terminal/save', payload: { journalBlocks: [] } });
+    dispatch({ type: 'SET_TERMINAL', payload: { journalBlocks: [] } });
   };
   /* start of autoComplete */
 
@@ -62,7 +64,7 @@ export const RemixUiTerminal = (props: any) => {
 
   const handleToggleTerminal = () => {
     dispatch({
-      type: 'terminal/save',
+      type: 'SET_TERMINAL',
       payload: { hidden: !hidden, height: hidden ? 250 : 35 },
     });
   };

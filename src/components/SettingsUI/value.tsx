@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { BN } from 'bn.js';
 import { CustomTooltip } from '../CustomTooltip';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { AppContext } from '../../contexts';
 
 export function ValueUI() {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const inputValue = useRef<HTMLInputElement>({} as HTMLInputElement);
 
-  const dispatch = useAppDispatch();
-  const { sendValue, sendUnit } = useAppSelector((state) => state.settings);
+  const { appState, dispatch } = useContext(AppContext);
+  const { sendValue, sendUnit } = appState.settings;
 
   useEffect(() => {
     if (sendValue !== inputValue.current.value) {
@@ -24,7 +24,7 @@ export function ValueUI() {
       // assign 0 if given value is
       // - empty
       inputValue.current.value = '0';
-      dispatch({ type: 'settings/save', payload: { sendValue: '0' } });
+      dispatch({ type: 'SET_SETTINGS', payload: { sendValue: '0' } });
       return;
     }
 
@@ -32,7 +32,7 @@ export function ValueUI() {
     try {
       v = new BN(value, 10);
       dispatch({
-        type: 'settings/save',
+        type: 'SET_SETTINGS',
         payload: { sendValue: v.toString(10) },
       });
     } catch (e) {
@@ -40,13 +40,13 @@ export function ValueUI() {
       // - not valid (for ex 4345-54)
       // - contains only '0's (for ex 0000) copy past or edit
       inputValue.current.value = '0';
-      dispatch({ type: 'settings/save', payload: { sendValue: '0' } });
+      dispatch({ type: 'SET_SETTINGS', payload: { sendValue: '0' } });
     }
 
     // @ts-expect-error
     if (v?.lt(0)) {
       inputValue.current.value = '0';
-      dispatch({ type: 'settings/save', payload: { sendValue: '0' } });
+      dispatch({ type: 'SET_SETTINGS', payload: { sendValue: '0' } });
     }
   };
 
@@ -83,7 +83,7 @@ export function ValueUI() {
           id="unit"
           onChange={(e: any) => {
             dispatch({
-              type: 'settings/save',
+              type: 'SET_SETTINGS',
               payload: {
                 sendUnit: e.target.value,
               },
