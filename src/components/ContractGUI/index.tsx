@@ -179,18 +179,13 @@ export function ContractGUI(props: any) {
 
   return (
     <div
-      className={`udapp_contractProperty ${
-        (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
-        props.funcABI.type === 'fallback' ||
-        props.funcABI.type === 'receive'
+      className={`${
+        props.funcABI.inputs && props.funcABI.inputs.length > 0
           ? 'udapp_hasArgs'
           : ''
       }`}
     >
-      <div
-        className="udapp_contractActionsContainerSingle pt-2"
-        style={{ display: toggleContainer ? 'none' : 'flex' }}
-      >
+      <div className={`${toggleContainer ? 'd-none' : 'd-flex'} w-100 pt-2`}>
         <CustomTooltip
           delay={0}
           placement={'right'}
@@ -209,13 +204,13 @@ export function ContractGUI(props: any) {
             data-title={buttonOptions.title}
           >
             <button
-              className={`udapp_instanceButton text-nowrap overflow-hidden text-truncate ${props.widthClass} btn btn-sm ${buttonOptions.classList}`}
+              className={`text-nowrap overflow-hidden text-truncate ${props.widthClass} btn btn-sm ${buttonOptions.classList}`}
               data-id={buttonOptions.dataId}
               data-title={buttonOptions.title}
               disabled={
                 props.disabled || (props.inputs !== '' && basicInput === '')
               }
-              style={{ pointerEvents: 'none' }}
+              style={{ pointerEvents: 'none', width: 100, minWidth: 80 }}
             >
               {title}
             </button>
@@ -253,6 +248,7 @@ export function ContractGUI(props: any) {
           className="fas fa-angle-down udapp_methCaret"
           onClick={switchMethodViewOn}
           style={{
+            lineHeight: 2,
             visibility: !(
               props.funcABI.inputs && props.funcABI.inputs.length > 0
             )
@@ -261,13 +257,13 @@ export function ContractGUI(props: any) {
           }}
         ></i>
       </div>
-      <div
-        className="udapp_contractActionsContainerMulti"
-        style={{ display: toggleContainer ? 'flex' : 'none' }}
-      >
-        <div className="udapp_contractActionsContainerMultiInner text-dark">
-          <div onClick={switchMethodViewOff} className="udapp_multiHeader">
-            <div className="udapp_multiTitle run-instance-multi-title pt-3">
+      <div className={`${toggleContainer ? 'd-flex' : 'd-none'} w-100`}>
+        <div className="w-100 text-dark">
+          <div
+            onClick={switchMethodViewOff}
+            className="d-flex justify-content-between align-items-center pt-2"
+          >
+            <div className="run-instance-multi-title" style={{ fontSize: 12 }}>
               {title}
             </div>
             <i className="fas fa-angle-up udapp_methCaret"></i>
@@ -275,7 +271,10 @@ export function ContractGUI(props: any) {
           <div>
             {props.funcABI.inputs.map((inp: any, index: number) => {
               return (
-                <div className="udapp_multiArg" key={index}>
+                <div
+                  className="udapp_multiArg d-flex align-items-center justify-content-end mt-2"
+                  key={index}
+                >
                   <label htmlFor={inp.name}> {inp.name}: </label>
                   <CustomTooltip
                     placement="left-end"
@@ -297,17 +296,17 @@ export function ContractGUI(props: any) {
               );
             })}
           </div>
-          <div className="d-flex udapp_group udapp_multiArg">
+          <div className="d-flex udapp_group udapp_multiArg d-flex align-items-center justify-content-end mt-2">
             <CopyToClipboard
               tip={intl.formatMessage({ id: 'udapp.copyCalldata' })}
               icon="fa-clipboard"
               direction={'bottom'}
               getContent={getEncodedCall}
             >
-              <button className="btn remixui_copyButton">
+              <button className="btn">
                 <i
                   id="copyCalldata"
-                  className="m-0 remixui_copyIcon far fa-copy"
+                  className="mr-2 far fa-copy"
                   aria-hidden="true"
                 ></i>
                 <label htmlFor="copyCalldata">Calldata</label>
@@ -319,10 +318,10 @@ export function ContractGUI(props: any) {
               direction={'bottom'}
               getContent={getEncodedParams}
             >
-              <button className="btn remixui_copyButton">
+              <button className="btn">
                 <i
                   id="copyParameters"
-                  className="m-0 remixui_copyIcon far fa-copy"
+                  className="mr-2 far fa-copy"
                   aria-hidden="true"
                 ></i>
                 <label htmlFor="copyParameters">
@@ -340,10 +339,11 @@ export function ContractGUI(props: any) {
                 <button
                   type="button"
                   data-id={buttonOptions.dataId}
-                  className={`udapp_instanceButton btn ${buttonOptions.classList}`}
+                  className={`btn ${buttonOptions.classList}`}
                   disabled={
                     props.disabled || (props.inputs !== '' && basicInput === '')
                   }
+                  style={{ width: 80 }}
                 >
                   {buttonOptions.content}
                 </button>

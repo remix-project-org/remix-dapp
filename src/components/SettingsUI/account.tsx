@@ -20,19 +20,19 @@ export function AccountUI() {
   }, [accounts, selectedAccount]);
 
   return (
-    <div className="udapp_crow">
-      <label className="udapp_settingsLabel">
+    <div className="d-block mt-2">
+      <label>
         <FormattedMessage id="udapp.account" />
         {isRequesting && (
           <FontAwesomeIcon className="ml-2" icon={faSpinner} pulse />
         )}
       </label>
-      <div className="udapp_account">
+      <div className="d-flex align-items-center">
         <select
           id="txorigin"
           data-id="runTabSelectAccount"
           name="txorigin"
-          className="form-control udapp_select custom-select pr-4"
+          className="form-control overflow-hidden w-100 font-weight-normal custom-select pr-4"
           value={selectedAccount || ''}
           onChange={(e) => {
             setAccount(e.target.value);

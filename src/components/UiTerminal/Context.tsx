@@ -24,25 +24,26 @@ const Context = ({ opts, provider }: { opts: any; provider: string }) => {
     return (
       <div>
         <span>
-          <span className="remix_ui_terminal_tx">[vm]</span>
+          <span className="remix_ui_terminal_tx font-weight-bold mr-3">
+            [vm]
+          </span>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">from:</span> {from}
+            <span className="font-weight-bold">from:</span> {from}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">to:</span> {to}
+            <span className="font-weight-bold">to:</span> {to}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">value:</span>{' '}
-            {value} wei
+            <span className="font-weight-bold">value:</span> {value} wei
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">data:</span> {input}
+            <span className="font-weight-bold">data:</span> {input}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">logs:</span> {logs}
+            <span className="font-weight-bold">logs:</span> {logs}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">hash:</span> {hash}
+            <span className="font-weight-bold">hash:</span> {hash}
           </div>
         </span>
       </div>
@@ -51,27 +52,26 @@ const Context = ({ opts, provider }: { opts: any; provider: string }) => {
     return (
       <div>
         <span>
-          <span className="remix_ui_terminal_tx">
+          <span className="remix_ui_terminal_tx font-weight-bold mr-3">
             [block:{block.toString()} txIndex:{i ? i.toString() : '-'}]
           </span>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">from:</span> {from}
+            <span className="font-weight-bold">from:</span> {from}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">to:</span> {to}
+            <span className="font-weight-bold">to:</span> {to}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">value:</span>{' '}
-            {value} wei
+            <span className="font-weight-bold">value:</span> {value} wei
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">data:</span> {input}
+            <span className="font-weight-bold">data:</span> {input}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">logs:</span> {logs}
+            <span className="font-weight-bold">logs:</span> {logs}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">hash:</span> {hash}
+            <span className="font-weight-bold">hash:</span> {hash}
           </div>
         </span>
       </div>
@@ -81,27 +81,26 @@ const Context = ({ opts, provider }: { opts: any; provider: string }) => {
     return (
       <div>
         <span>
-          <span className="remix_ui_terminal_tx">
+          <span className="remix_ui_terminal_tx font-weight-bold mr-3">
             [block:{block.toString()} txIndex:{i ? i.toString() : '-'}]
           </span>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">from:</span> {from}
+            <span className="font-weight-bold">from:</span> {from}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">to:</span> {to}
+            <span className="font-weight-bold">to:</span> {to}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">value:</span>{' '}
-            {value} wei
+            <span className="font-weight-bold">value:</span> {value} wei
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">data:</span> {input}
+            <span className="font-weight-bold">data:</span> {input}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">logs:</span> {logs}
+            <span className="font-weight-bold">logs:</span> {logs}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">hash:</span> {hash}
+            <span className="font-weight-bold">hash:</span> {hash}
           </div>
         </span>
       </div>

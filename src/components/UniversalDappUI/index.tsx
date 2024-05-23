@@ -102,7 +102,7 @@ export function UniversalDappUI(props: any) {
   const label = (key: string | number, value: string) => {
     return (
       <div className="d-flex mt-2 flex-row label_item">
-        <label className="small font-weight-bold mb-0 pr-1 label_key">
+        <label className="small font-weight-bold mb-0 pr-1 text-break label_key">
           {key}:
         </label>
         <label className="m-0 label_value">{value}</label>
@@ -177,10 +177,11 @@ export function UniversalDappUI(props: any) {
                   const inputs = getFuncABIInputs(funcABI);
                   return (
                     <div
-                      className="udapp_cActionsWrapper bg-light mb-2"
+                      className="p-2 bg-light mb-2"
                       data-id="universalDappUiContractActionWrapper"
+                      key={funcId}
                     >
-                      <div className="udapp_contractActionsContainer">
+                      <div className="w-100 mb-2">
                         <div>
                           {funcABI.title && <h1>{funcABI.title}</h1>}
                           <ContractGUI
@@ -255,14 +256,14 @@ export function UniversalDappUI(props: any) {
             return (
               <div
                 key={index}
-                className={`instance udapp_instance udapp_run-instance border-dark col-6`}
+                className={`instance d-block flex-column bg-transparent udapp_run-instance border-dark col-6`}
                 data-shared="universalDappUiInstance"
               >
                 <div
-                  className="udapp_cActionsWrapper bg-light mb-2"
+                  className="p-2 bg-light mb-2"
                   data-id="universalDappUiContractActionWrapper"
                 >
-                  <div className="udapp_contractActionsContainer">
+                  <div className="w-100 mb-2">
                     <div>
                       <ContractGUI
                         funcABI={funcABI}

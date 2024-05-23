@@ -12,8 +12,8 @@ export function GasPriceUI() {
   const gasLimit = appState.settings.gasLimit;
 
   return (
-    <div className="udapp_crow">
-      <label className="udapp_settingsLabel">
+    <div className="d-block mt-2">
+      <label>
         <FormattedMessage id="udapp.gasLimit" />
       </label>
       <CustomTooltip
@@ -24,7 +24,7 @@ export function GasPriceUI() {
       >
         <input
           type="number"
-          className="form-control udapp_gasNval udapp_col2"
+          className="form-control w-75"
           id="gasLimit"
           value={gasLimit}
           onChange={handleGasLimit}

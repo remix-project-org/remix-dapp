@@ -6,11 +6,12 @@ export function NetworkUI() {
   const networkName = appState.settings.networkName;
   return (
     <div className="">
-      <div className="udapp_settingsLabel"></div>
-      <div className="udapp_environment" data-id="settingsNetworkEnv">
-        <span className="udapp_network badge badge-secondary">
-          {networkName}
-        </span>
+      <div></div>
+      <div
+        className="d-flex align-items-center position-relative w-100"
+        data-id="settingsNetworkEnv"
+      >
+        <span className="badge badge-secondary">{networkName}</span>
       </div>
     </div>
   );

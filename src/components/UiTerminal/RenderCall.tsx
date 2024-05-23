@@ -22,24 +22,26 @@ const RenderCall = ({
   return (
     <span id={`tx${tx.hash}`} key={index}>
       <div
-        className="remix_ui_terminal_log"
+        className="remix_ui_terminal_log d-flex align-items-center pt-2"
         onClick={(event) => txDetails(event, tx)}
       >
         <CheckTxStatus tx={tx} type={txType} />
         <span>
-          <span className="remix_ui_terminal_tx">[call]</span>
+          <span className="remix_ui_terminal_tx font-weight-bold">[call]</span>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">from:</span> {from}
+            <span className="font-weight-bold">from:</span> {from}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">to:</span> {to}
+            <span className="font-weight-bold">to:</span> {to}
           </div>
           <div className="remix_ui_terminal_txItem">
-            <span className="remix_ui_terminal_txItemTitle">data:</span> {input}
+            <span className="font-weight-bold">data:</span> {input}
           </div>
         </span>
         <i
-          className={`remix_ui_terminal_arrow fas ${showTableHash.includes(tx.hash) ? 'fa-angle-up' : 'fa-angle-down'}`}
+          className={`remix_ui_terminal_arrow d-flex ml-2 fas ${
+            showTableHash.includes(tx.hash) ? 'fa-angle-up' : 'fa-angle-down'
+          }`}
         ></i>
       </div>
       {showTableHash.includes(tx.hash)
@@ -57,14 +59,14 @@ const RenderCall = ({
                 ? JSON.stringify(
                     typeConversion.stringify(resolvedData.params),
                     null,
-                    '\t',
+                    '\t'
                   )
                 : ' - ',
               'decoded output': resolvedData?.decodedReturnValue
                 ? JSON.stringify(
                     typeConversion.stringify(resolvedData.decodedReturnValue),
                     null,
-                    '\t',
+                    '\t'
                   )
                 : ' - ',
               val: tx.value,
@@ -72,7 +74,7 @@ const RenderCall = ({
               transactionCost: tx.transactionCost,
               executionCost: tx.executionCost,
             },
-            showTableHash,
+            showTableHash
           )
         : null}
     </span>

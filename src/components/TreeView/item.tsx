@@ -47,7 +47,7 @@ export const TreeViewItem = (props: TreeViewItemProps) => {
       ref={innerRef}
       key={`treeViewLi${id}`}
       data-id={`treeViewLi${id}`}
-      className="li_tv"
+      className="list-unstyled"
       {...otherProps}
     >
       <div
@@ -61,12 +61,12 @@ export const TreeViewItem = (props: TreeViewItemProps) => {
         {children && showIcon ? (
           <div
             className={
-              isExpanded ? `pl-2 ${iconY}` : `pl-2 ${iconX} caret caret_tv`
+              isExpanded ? `pl-2 ${iconY}` : `pl-2 ${iconX} caret flex-shrink-0`
             }
             style={{ visibility: children ? 'visible' : 'hidden' }}
           ></div>
         ) : icon ? (
-          <div className={`pr-2 pl-2 ${icon} caret caret_tv`}></div>
+          <div className={`pr-2 pl-2 ${icon} caret flex-shrink-0`}></div>
         ) : null}
         <span className="w-100 ml-1 pl-2">{label}</span>
       </div>

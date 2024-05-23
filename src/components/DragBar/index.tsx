@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useContext, useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
-import './index.css';
 import { AppContext } from '../../contexts';
 
 const DragBar = () => {
@@ -41,7 +40,7 @@ const DragBar = () => {
   }
   return (
     <>
-      <div className={`overlay ${dragState ? '' : 'd-none'}`}></div>
+      <div className={`position-absolute ${dragState ? '' : 'd-none'}`}></div>
       <Draggable
         nodeRef={nodeRef}
         position={{ x: 0, y: dragBarPosY }}
@@ -51,7 +50,9 @@ const DragBar = () => {
       >
         <div
           ref={nodeRef}
-          className={`dragbar_terminal ${dragState ? 'ondrag' : ''}`}
+          className={`position-absolute w-100 dragbar_terminal ${
+            dragState ? 'ondrag' : ''
+          }`}
         ></div>
       </Draggable>
     </>

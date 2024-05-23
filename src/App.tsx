@@ -10,6 +10,7 @@ import zhJson from './locales/zh';
 import esJson from './locales/es';
 import frJson from './locales/fr';
 import itJson from './locales/it';
+import './App.css';
 
 const localeMap: Record<string, any> = {
   zh: zhJson,

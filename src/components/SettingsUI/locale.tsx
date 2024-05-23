@@ -30,16 +30,16 @@ export function LocaleUI() {
   };
 
   return (
-    <div className="udapp_crow border-top mt-4">
-      <label className="udapp_settingsLabel">
+    <div className="d-block mt-2 border-top">
+      <label>
         <FormattedMessage id="udapp.locales" />
       </label>
-      <div className="udapp_account">
+      <div className="d-flex align-items-center">
         <select
           id="txorigin"
           data-id="runTabSelectAccount"
           name="txorigin"
-          className="form-control udapp_select custom-select pr-4"
+          className="form-control overflow-hidden w-100 font-weight-normal custom-select pr-4"
           value={selectedLocaleCode || localeCodeList[0]}
           onChange={(e) => {
             setLocaleCode(e.target.value);

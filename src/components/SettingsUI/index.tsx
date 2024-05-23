@@ -35,7 +35,7 @@ export function SettingsUI() {
   const shareUrl = encodeURIComponent(window.origin);
   const shareTitle = encodeURIComponent('Hello everyone, this is my dapp!');
   return (
-    <div className="udapp_settings">
+    <div className="px-4">
       {shareTo && (
         <>
           {shareTo.includes('twitter') && (
@@ -69,10 +69,16 @@ export function SettingsUI() {
         </>
       )}
       <NetworkUI />
-      <div className="udapp_title pb-0 alert alert-secondary">
-        <div className="input-group udapp_nameNbuts">
-          <div className="udapp_titleText input-group-prepend">
-            <span className="input-group-text udapp_spanTitleText">
+      <div className="bg-transparent d-flex m-0 p-0 border-0 alert alert-secondary">
+        <div
+          className="input-grou w-100 flex-nowrap"
+          style={{ display: 'contents' }}
+        >
+          <div className="w-100 input-group-prepend">
+            <span
+              className="input-group-text p-0 bg-transparent text-uppercase"
+              style={{ fontSize: 11 }}
+            >
               {name} at {shortenAddress(address)}
             </span>
           </div>

@@ -3,8 +3,6 @@ import copy from 'copy-to-clipboard';
 import { CustomTooltip } from '../CustomTooltip';
 import { type Placement } from 'react-bootstrap/esm/types';
 
-import './index.css';
-
 interface ICopyToClipboard {
   content?: any;
   tip?: string;

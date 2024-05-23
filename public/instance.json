@@ -30,6 +30,70 @@
       "title": "this is title",
       "intro": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
     },
+    "0x42966c68": {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0x42966c68",
+      "intro": "Destroys a `value` amount of tokens from the caller. See {ERC20-_burn}."
+    },
+    "0x79cc6790": {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "burnFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0x79cc6790",
+      "intro": "Destroys a `value` amount of tokens from `account`, deducting from the caller's allowance. See {ERC20-_burn} and {ERC20-allowance}. Requirements: - the caller must have allowance for ``accounts``'s tokens of at least `value`."
+    },
+    "0x40c10f19": {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0x40c10f19",
+      "intro": ""
+    },
+    "0x8456cb59": {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0x8456cb59",
+      "intro": ""
+    },
     "0xd505accf": {
       "inputs": [
         {
@@ -74,6 +138,15 @@
       "type": "function",
       "id": "0xd505accf",
       "intro": "Sets `value` as the allowance of `spender` over ``owner``'s tokens, given ``owner``'s signed approval. IMPORTANT: The same issues {IERC20-approve} has related to transaction ordering also apply here. Emits an {Approval} event. Requirements: - `spender` cannot be the zero address. - `deadline` must be a timestamp in the future. - `v`, `r` and `s` must be a valid `secp256k1` signature from `owner` over the EIP712-formatted function arguments. - the signature must use ``owner``'s current nonce (see {nonces}). For more information on the signature format, see the https://eips.ethereum.org/EIPS/eip-2612#specification[relevant EIP section]. CAUTION: See Security Considerations above."
+    },
+    "0x715018a6": {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0x715018a6",
+      "intro": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
     },
     "0xa9059cbb": {
       "inputs": [
@@ -131,6 +204,30 @@
       "type": "function",
       "id": "0x23b872dd",
       "intro": "See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `value`. - the caller must have allowance for ``from``'s tokens of at least `value`."
+    },
+    "0xf2fde38b": {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0xf2fde38b",
+      "intro": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+    },
+    "0x3f4ba83a": {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "id": "0x3f4ba83a",
+      "intro": ""
     },
     "0xdd62ed3e": {
       "inputs": [
@@ -290,6 +387,36 @@
       "id": "0x7ecebe00",
       "intro": "Returns the current nonce for `owner`. This value must be included whenever a signature is generated for {permit}. Every successful call to {permit} increases ``owner``'s nonce by one. This prevents a signature from being used multiple times."
     },
+    "0x8da5cb5b": {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "id": "0x8da5cb5b",
+      "intro": "Returns the address of the current owner."
+    },
+    "0x5c975abb": {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "id": "0x5c975abb",
+      "intro": "Returns true if the contract is paused, and false otherwise."
+    },
     "0x95d89b41": {
       "inputs": [],
       "name": "symbol",
@@ -323,23 +450,32 @@
   },
   "items": {
     "A": [
-      "0x095ea7b3",
-      "0xd505accf",
+      "0x79cc6790",
+      "0x715018a6",
       "0xa9059cbb",
       "0x23b872dd",
-      "0xdd62ed3e",
-      "0x70a08231",
-      "0x313ce567"
+      "0xf2fde38b",
+      "0x3f4ba83a",
+      "0xdd62ed3e"
     ],
     "B": [
+      "0x3644e515",
+      "0x84b0196e",
       "0x06fdde03",
+      "0x7ecebe00",
+      "0x8da5cb5b",
+      "0x5c975abb",
       "0x95d89b41",
       "0x18160ddd"
     ],
     "C": [
-      "0x3644e515",
-      "0x84b0196e",
-      "0x7ecebe00"
+      "0x70a08231",
+      "0x8456cb59",
+      "0xd505accf",
+      "0x40c10f19",
+      "0x42966c68",
+      "0x095ea7b3",
+      "0x313ce567"
     ]
   },
   "containers": [
@@ -347,9 +483,9 @@
     "B",
     "C"
   ],
+  "shortname": "remix-dapp",
   "shareTo": [
     "twitter",
     "facebook"
-  ],
-  "shortname": "remix-dapp"
+  ]
 }

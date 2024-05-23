@@ -72,21 +72,22 @@ export const RemixUiTerminal = (props: any) => {
   const classNameBlock = 'remix_ui_terminal_block px-4 py-1 text-break';
 
   return (
-    <div className="terminal-wrap fixed-bottom" style={{ height }}>
+    <div className="fixed-bottom" style={{ height }}>
       <div
         id="terminal-view"
-        className="panel"
+        className="h-100 d-flex"
         data-id="terminalContainer-view"
       >
         <div
-          style={{ flexGrow: 1 }}
-          className="remix_ui_terminal_panel"
+          style={{ fontSize: 12 }}
+          className="d-flex position-relative flex-column flex-grow-1"
           ref={panelRef}
         >
-          <div className="remix_ui_terminal_bar d-flex">
+          <div className="z-2 d-flex">
             <div
-              className="remix_ui_terminal_menu d-flex w-100 align-items-center position-relative border-top border-dark bg-light"
+              className="d-flex w-100 align-items-center position-relative border-top border-dark bg-light"
               ref={terminalMenu}
+              style={{ height: 35 }}
               data-id="terminalToggleMenu"
             >
               <CustomTooltip
@@ -110,7 +111,8 @@ export const RemixUiTerminal = (props: any) => {
                 ></i>
               </CustomTooltip>
               <div
-                className="mx-2 cursor_pointer"
+                className="mx-2 remix_ui_terminal_toggleTerminal"
+                role="button"
                 id="clearConsole"
                 data-id="terminalClearConsole"
                 onClick={handleClearConsole}
@@ -125,7 +127,7 @@ export const RemixUiTerminal = (props: any) => {
                 </CustomTooltip>
               </div>
               {/* <div
-                className="pl-2 cursor_pointer"
+                className="pl-2 remix_ui_terminal_toggleTerminal"
                 onClick={() => {
                   setDisplay('transaction');
                 }}
@@ -139,7 +141,7 @@ export const RemixUiTerminal = (props: any) => {
               </div>
               {shortname && (
                 <div
-                  className="pl-3 cursor_pointer"
+                  className="pl-3 remix_ui_terminal_toggleTerminal"
                   onClick={() => {
                     setDisplay('comment');
                   }}
@@ -170,7 +172,7 @@ export const RemixUiTerminal = (props: any) => {
             >
               <div
                 id="journal"
-                className="remix_ui_terminal_journal d-flex flex-column pt-3 pb-4 px-2 mx-2 mr-0"
+                className="remix_ui_terminal_journal d-flex flex-column pt-3 pb-4 px-2 ml-2 mr-0 mt-auto"
                 data-id="terminalJournal"
               >
                 {journalBlocks?.map((x: any, index: number) => {
