@@ -198,7 +198,7 @@ export function ContractGUI(props: any) {
           }
         >
           <div
-            className="d-flex btn p-0 wrapperElement"
+            className="d-flex p-0 wrapperElement"
             onClick={handleActionClick}
             data-id={buttonOptions.dataId}
             data-title={buttonOptions.title}
@@ -210,7 +210,12 @@ export function ContractGUI(props: any) {
               disabled={
                 props.disabled || (props.inputs !== '' && basicInput === '')
               }
-              style={{ pointerEvents: 'none', width: 100, minWidth: 80 }}
+              style={{
+                pointerEvents: 'none',
+                width: 100,
+                minWidth: 80,
+                borderRadius: 3,
+              }}
             >
               {title}
             </button>

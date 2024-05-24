@@ -11,7 +11,7 @@ export const TreeView = (props: TreeViewProps) => {
   return (
     <ul
       data-id={`treeViewUl${id}`}
-      className="list-unstyled ml-0 pl-1"
+      className="list-unstyled ml-0 mb-0 pl-1"
       {...otherProps}
     >
       {children}
