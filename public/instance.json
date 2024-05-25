@@ -2,6 +2,8 @@
   "name": "MyToken",
   "address": "0x638f62fCec18Fd8D284f5902d201B64499c8D397",
   "network": "Sepolia (11155111) network",
+  "title": "Owner",
+  "details": "Set & change owner",
   "abi": {
     "0x095ea7b3": {
       "inputs": [
@@ -28,7 +30,7 @@
       "type": "function",
       "id": "0x095ea7b3",
       "title": "this is title",
-      "intro": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
+      "details": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
     },
     "0x42966c68": {
       "inputs": [
@@ -43,7 +45,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x42966c68",
-      "intro": "Destroys a `value` amount of tokens from the caller. See {ERC20-_burn}."
+      "details": "Destroys a `value` amount of tokens from the caller. See {ERC20-_burn}."
     },
     "0x79cc6790": {
       "inputs": [
@@ -63,7 +65,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x79cc6790",
-      "intro": "Destroys a `value` amount of tokens from `account`, deducting from the caller's allowance. See {ERC20-_burn} and {ERC20-allowance}. Requirements: - the caller must have allowance for ``accounts``'s tokens of at least `value`."
+      "details": "Destroys a `value` amount of tokens from `account`, deducting from the caller's allowance. See {ERC20-_burn} and {ERC20-allowance}. Requirements: - the caller must have allowance for ``accounts``'s tokens of at least `value`."
     },
     "0x40c10f19": {
       "inputs": [
@@ -83,7 +85,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x40c10f19",
-      "intro": ""
+      "details": ""
     },
     "0x8456cb59": {
       "inputs": [],
@@ -92,7 +94,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x8456cb59",
-      "intro": ""
+      "details": ""
     },
     "0xd505accf": {
       "inputs": [
@@ -137,7 +139,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0xd505accf",
-      "intro": "Sets `value` as the allowance of `spender` over ``owner``'s tokens, given ``owner``'s signed approval. IMPORTANT: The same issues {IERC20-approve} has related to transaction ordering also apply here. Emits an {Approval} event. Requirements: - `spender` cannot be the zero address. - `deadline` must be a timestamp in the future. - `v`, `r` and `s` must be a valid `secp256k1` signature from `owner` over the EIP712-formatted function arguments. - the signature must use ``owner``'s current nonce (see {nonces}). For more information on the signature format, see the https://eips.ethereum.org/EIPS/eip-2612#specification[relevant EIP section]. CAUTION: See Security Considerations above."
+      "details": "Sets `value` as the allowance of `spender` over ``owner``'s tokens, given ``owner``'s signed approval. IMPORTANT: The same issues {IERC20-approve} has related to transaction ordering also apply here. Emits an {Approval} event. Requirements: - `spender` cannot be the zero address. - `deadline` must be a timestamp in the future. - `v`, `r` and `s` must be a valid `secp256k1` signature from `owner` over the EIP712-formatted function arguments. - the signature must use ``owner``'s current nonce (see {nonces}). For more information on the signature format, see the https://eips.ethereum.org/EIPS/eip-2612#specification[relevant EIP section]. CAUTION: See Security Considerations above."
     },
     "0x715018a6": {
       "inputs": [],
@@ -146,7 +148,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x715018a6",
-      "intro": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
     },
     "0xa9059cbb": {
       "inputs": [
@@ -172,7 +174,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0xa9059cbb",
-      "intro": "See {IERC20-transfer}. Requirements: - `to` cannot be the zero address. - the caller must have a balance of at least `value`."
+      "details": "See {IERC20-transfer}. Requirements: - `to` cannot be the zero address. - the caller must have a balance of at least `value`."
     },
     "0x23b872dd": {
       "inputs": [
@@ -203,7 +205,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x23b872dd",
-      "intro": "See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `value`. - the caller must have allowance for ``from``'s tokens of at least `value`."
+      "details": "See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `value`. - the caller must have allowance for ``from``'s tokens of at least `value`."
     },
     "0xf2fde38b": {
       "inputs": [
@@ -218,7 +220,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0xf2fde38b",
-      "intro": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
     },
     "0x3f4ba83a": {
       "inputs": [],
@@ -227,7 +229,7 @@
       "stateMutability": "nonpayable",
       "type": "function",
       "id": "0x3f4ba83a",
-      "intro": ""
+      "details": ""
     },
     "0xdd62ed3e": {
       "inputs": [
@@ -253,7 +255,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0xdd62ed3e",
-      "intro": "See {IERC20-allowance}."
+      "details": "See {IERC20-allowance}."
     },
     "0x70a08231": {
       "inputs": [
@@ -274,7 +276,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x70a08231",
-      "intro": "See {IERC20-balanceOf}."
+      "details": "See {IERC20-balanceOf}."
     },
     "0x313ce567": {
       "inputs": [],
@@ -289,7 +291,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x313ce567",
-      "intro": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
+      "details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
     },
     "0x3644e515": {
       "inputs": [],
@@ -304,7 +306,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x3644e515",
-      "intro": "Returns the domain separator used in the encoding of the signature for {permit}, as defined by {EIP712}."
+      "details": "Returns the domain separator used in the encoding of the signature for {permit}, as defined by {EIP712}."
     },
     "0x84b0196e": {
       "inputs": [],
@@ -349,7 +351,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x84b0196e",
-      "intro": "See {IERC-5267}."
+      "details": "See {IERC-5267}."
     },
     "0x06fdde03": {
       "inputs": [],
@@ -364,7 +366,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x06fdde03",
-      "intro": "Returns the name of the token."
+      "details": "Returns the name of the token."
     },
     "0x7ecebe00": {
       "inputs": [
@@ -385,7 +387,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x7ecebe00",
-      "intro": "Returns the current nonce for `owner`. This value must be included whenever a signature is generated for {permit}. Every successful call to {permit} increases ``owner``'s nonce by one. This prevents a signature from being used multiple times."
+      "details": "Returns the current nonce for `owner`. This value must be included whenever a signature is generated for {permit}. Every successful call to {permit} increases ``owner``'s nonce by one. This prevents a signature from being used multiple times."
     },
     "0x8da5cb5b": {
       "inputs": [],
@@ -400,7 +402,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x8da5cb5b",
-      "intro": "Returns the address of the current owner."
+      "details": "Returns the address of the current owner."
     },
     "0x5c975abb": {
       "inputs": [],
@@ -415,7 +417,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x5c975abb",
-      "intro": "Returns true if the contract is paused, and false otherwise."
+      "details": "Returns true if the contract is paused, and false otherwise."
     },
     "0x95d89b41": {
       "inputs": [],
@@ -430,7 +432,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x95d89b41",
-      "intro": "Returns the symbol of the token, usually a shorter version of the name."
+      "details": "Returns the symbol of the token, usually a shorter version of the name."
     },
     "0x18160ddd": {
       "inputs": [],
@@ -445,7 +447,7 @@
       "stateMutability": "view",
       "type": "function",
       "id": "0x18160ddd",
-      "intro": "See {IERC20-totalSupply}."
+      "details": "See {IERC20-totalSupply}."
     }
   },
   "items": {

@@ -1,4 +1,3 @@
-import { FormattedMessage } from 'react-intl';
 import { useContext, useEffect } from 'react';
 import { AppContext } from '../../contexts';
 
@@ -30,10 +29,7 @@ export function LocaleUI() {
   };
 
   return (
-    <div className="d-block mt-2 border-top">
-      <label>
-        <FormattedMessage id="udapp.locales" />
-      </label>
+    <div className="d-block">
       <div className="d-flex align-items-center">
         <select
           id="txorigin"
@@ -47,7 +43,7 @@ export function LocaleUI() {
         >
           {localeCodeList.map((localeCode) => (
             <option value={localeCode} key={localeCode}>
-              {localeMap[localeCode]}
+              {localeCode.toUpperCase()}
             </option>
           ))}
         </select>

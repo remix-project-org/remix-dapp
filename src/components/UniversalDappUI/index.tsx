@@ -202,9 +202,9 @@ export function UniversalDappUI(props: any) {
                             lookupOnly={lookupOnly}
                             key={funcId}
                           />
-                          {funcABI.intro && (
+                          {funcABI.details && (
                             <div className="pt-2 udapp_intro">
-                              {funcABI.intro}
+                              {funcABI.details}
                             </div>
                           )}
                           {lookupOnly && (

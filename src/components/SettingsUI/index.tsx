@@ -13,61 +13,14 @@ import { AppContext } from '../../contexts';
 export function SettingsUI() {
   const intl = useIntl();
   const { appState } = useContext(AppContext);
-  const { balance, name, address, shareTo } = appState.instance;
-  const getBoxPositionOnWindowCenter = (width: number, height: number) => ({
-    left:
-      window.outerWidth / 2 +
-      (window.screenX || window.screenLeft || 0) -
-      width / 2,
-    top:
-      window.outerHeight / 2 +
-      (window.screenY || window.screenTop || 0) -
-      height / 2,
-  });
-  let windowConfig: any = {
-    width: 600,
-    height: 400,
-  };
-  windowConfig = Object.assign(
-    windowConfig,
-    getBoxPositionOnWindowCenter(windowConfig.width, windowConfig.height)
-  );
-  const shareUrl = encodeURIComponent(window.origin);
-  const shareTitle = encodeURIComponent('Hello everyone, this is my dapp!');
+  const { balance, name, address } = appState.instance;
+
   return (
     <div className="px-4">
-      {shareTo && (
-        <>
-          {shareTo.includes('twitter') && (
-            <i
-              className="fab fa-twitter btn"
-              onClick={() => {
-                window.open(
-                  `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`,
-                  '',
-                  Object.keys(windowConfig)
-                    .map((key) => `${key}=${windowConfig[key]}`)
-                    .join(', ')
-                );
-              }}
-            />
-          )}
-          {shareTo.includes('facebook') && (
-            <i
-              className="fab fa-facebook btn"
-              onClick={() => {
-                window.open(
-                  `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                  '',
-                  Object.keys(windowConfig)
-                    .map((key) => `${key}=${windowConfig[key]}`)
-                    .join(', ')
-                );
-              }}
-            />
-          )}
-        </>
-      )}
+      <div className="mb-3 p-2 w-auto d-flex justify-content-between align-items-center">
+        <div>Remix DApp</div>
+        <LocaleUI />
+      </div>
       <NetworkUI />
       <div className="bg-transparent d-flex m-0 p-0 border-0 alert alert-secondary">
         <div
@@ -76,7 +29,7 @@ export function SettingsUI() {
         >
           <div className="w-100 input-group-prepend">
             <span
-              className="input-group-text p-0 bg-transparent text-uppercase"
+              className="input-group-text border-0 p-0 bg-transparent text-uppercase"
               style={{ fontSize: 11 }}
             >
               {name} at {shortenAddress(address)}
@@ -99,7 +52,6 @@ export function SettingsUI() {
       <AccountUI />
       <GasPriceUI />
       <ValueUI />
-      <LocaleUI />
       {/* <ThemeUI /> */}
     </div>
   );
