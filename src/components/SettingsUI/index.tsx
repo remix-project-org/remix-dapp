@@ -4,7 +4,7 @@ import { AccountUI } from './account';
 import { GasPriceUI } from './gasPrice';
 import { ValueUI } from './value';
 import { LocaleUI } from './locale';
-import { ThemeUI } from './theme';
+// import { ThemeUI } from './theme';
 import { FormattedMessage, useIntl } from 'react-intl';
 import CopyToClipboard from '../CopyToClipboard';
 import { shortenAddress } from '../UiHelper';
@@ -100,7 +100,7 @@ export function SettingsUI() {
       <GasPriceUI />
       <ValueUI />
       <LocaleUI />
-      <ThemeUI />
+      {/* <ThemeUI /> */}
     </div>
   );
 }
