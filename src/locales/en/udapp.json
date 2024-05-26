@@ -150,5 +150,6 @@
   "udapp.ganacheProviderText1": "Note: To run Ganache on your system, run:",
   "udapp.ganacheProviderText2": "For more info, visit: <a>Ganache Documentation</a>",
   "udapp.hardhatProviderText1": "Note: To run Hardhat network node on your system, go to hardhat project folder and run command:",
-  "udapp.hardhatProviderText2": "For more info, visit: <a>Hardhat Documentation</a>"
+  "udapp.hardhatProviderText2": "For more info, visit: <a>Hardhat Documentation</a>",
+  "udapp.viewSourceCode": "View Source Code"
 }

@@ -136,5 +136,6 @@
   "udapp.ganacheProviderText1": "注意: 要在您的系统里运行 Ganache, 运行:",
   "udapp.ganacheProviderText2": "更多信息, 访问: <a>Ganache 文档</a>",
   "udapp.hardhatProviderText1": "注意: 要在您的系统里运行 Hardhat 网络节点, 进到 hardhat 项目目录并且运行命令:",
-  "udapp.hardhatProviderText2": "更多信息, 访问: <a>Hardhat 文档</a>"
+  "udapp.hardhatProviderText2": "更多信息, 访问: <a>Hardhat 文档</a>",
+  "udapp.viewSourceCode": "查看源码"
 }
