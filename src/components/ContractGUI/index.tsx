@@ -211,7 +211,6 @@ export function ContractGUI(props: any) {
                 props.disabled || (props.inputs !== '' && basicInput === '')
               }
               style={{
-                pointerEvents: 'none',
                 width: 100,
                 minWidth: 80,
                 borderRadius: 3,
