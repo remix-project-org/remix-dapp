@@ -9,6 +9,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import CopyToClipboard from '../CopyToClipboard';
 import { shortenAddress } from '../UiHelper';
 import { AppContext } from '../../contexts';
+import { CustomTooltip } from '../CustomTooltip';
 
 export function SettingsUI() {
   const intl = useIntl();
@@ -17,11 +18,7 @@ export function SettingsUI() {
 
   return (
     <div className="px-4">
-      <div className="p-2 w-auto d-flex justify-content-between align-items-center">
-        <h1>Remix DApp</h1>
-        <LocaleUI />
-      </div>
-      <div className="bg-light my-4 p-3">
+      <div className="bg-light mt-3 mb-4 p-3">
         <NetworkUI />
         <div className="bg-transparent d-flex m-0 p-0 border-0 alert alert-secondary">
           <div
@@ -55,17 +52,37 @@ export function SettingsUI() {
         <ValueUI />
         {/* <ThemeUI /> */}
       </div>
-      {verified && (
-        <a
-          href={`https://remix.ethereum.org/address/${address}`}
-          className="btn btn-primary mt-4"
-          role="button"
-          aria-disabled="true"
-          target="_blank"
-        >
-          <FormattedMessage id="udapp.viewSourceCode" />
-        </a>
-      )}
+      <div className="p-2 w-auto d-flex justify-content-between align-items-center">
+        <span>
+          QuickDapp by{' '}
+          <a href={`https://remix.ethereum.org`} target="_blank">
+            <CustomTooltip
+              placement="top"
+              tooltipId="remix"
+              tooltipClasses="text-nowrap"
+              tooltipText="Remix IDE"
+            >
+              <img
+                className=""
+                src="https://remix.ethereum.org/assets/img/remix-logo-blue.png"
+                style={{ height: '1.5rem' }}
+                alt=""
+              />
+            </CustomTooltip>
+          </a>
+        </span>
+        {verified && (
+          <a
+            href={`https://remix.ethereum.org/address/${address}`}
+            className="btn btn-primary"
+            role="button"
+            aria-disabled="true"
+            target="_blank"
+          >
+            <FormattedMessage id="udapp.viewSourceCode" />
+          </a>
+        )}
+      </div>
     </div>
   );
 }
