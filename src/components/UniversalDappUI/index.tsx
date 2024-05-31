@@ -183,7 +183,7 @@ export function UniversalDappUI(props: any) {
                     >
                       <div className="w-100 mb-2">
                         <div>
-                          {funcABI.title && <h1>{funcABI.title}</h1>}
+                          {funcABI.title && <h3>{funcABI.title}</h3>}
                           <ContractGUI
                             funcABI={funcABI}
                             clickCallBack={(
