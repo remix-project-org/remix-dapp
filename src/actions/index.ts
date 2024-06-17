@@ -2,7 +2,9 @@ import axios from 'axios';
 import Web3 from 'web3';
 import BN from 'bn.js';
 import { execution } from '@remix-project/remix-lib';
-import injected from '../utils/injected';
+import txRunner from '../utils/txRunner';
+import metamask from '../utils/metamask';
+import walletConnect from '../utils/walletConnect';
 import { EventsDecoder } from '../utils/eventsDecoder';
 import buildData from '../utils/buildData';
 
@@ -19,88 +21,35 @@ export const updateState = (_state: any) => {
   state = _state;
 };
 
-const addCustomNetwork = async (payload: {
-  chainName?: string;
-  chainId: string;
-  rpcUrls?: Array<string>;
-  nativeCurrency?: Record<string, any>;
-  blockExplorerUrls?: Array<string>;
-}) => {
-  const { chainId, chainName, rpcUrls, nativeCurrency, blockExplorerUrls } =
-    payload;
-  try {
-    await (window as any).ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: chainId }],
-    });
-  } catch (switchError: any) {
-    // This error code indicates that the chain has not been added to MetaMask.
-    if (switchError.code === 4902) {
-      try {
-        const paramsObj: Record<string, any> = {
-          chainId: chainId,
-          chainName: chainName,
-          rpcUrls: rpcUrls,
-        };
-        if (nativeCurrency) paramsObj.nativeCurrency = nativeCurrency;
-        if (blockExplorerUrls) paramsObj.blockExplorerUrls = blockExplorerUrls;
-        await (window as any).ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [paramsObj],
-        });
-
-        await (window as any).ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: chainId }],
-        });
-      } catch (addError) {
-        // handle "add" error
-      }
-    }
-    // handle other "switch" errors
-  }
-};
-
-export const connect = async (payload: any) => {
-  const { networkName } = payload;
-  await dispatch({ type: 'SET_SETTINGS', payload: { networkName } });
+export const setProvider = async (payload: any) => {
+  await dispatch({
+    type: 'SET_SETTINGS',
+    payload: { loadedAccounts: {} },
+  });
+  const { provider, networkName } = payload;
   const chainId =
     '0x' + Number(networkName.match(/\(([^)]+)\)/)[1]).toString(16);
-  const paramsObj: any = { chainId };
-  if (chainId === '0xa') {
-    paramsObj.chainName = 'Optimism';
-    paramsObj.rpcUrls = ['https://mainnet.optimism.io'];
+  if (provider === 'metamask') {
+    const web3Provider: any = window.ethereum;
+    await metamask.addCustomNetwork(chainId);
+    await web3Provider.request({ method: 'eth_requestAccounts' });
+    txRunner.setProvider(web3Provider);
+    txRunner.getAccounts();
   }
-  if (chainId === '0xa4b1') {
-    paramsObj.chainName = 'Arbitrum One';
-    paramsObj.rpcUrls = ['https://arb1.arbitrum.io/rpc'];
+
+  if (provider === 'walletconnect') {
+    txRunner.setProvider(walletConnect as any);
   }
-  if (chainId === '0x50877ed6') {
-    paramsObj.chainName = 'SKALE Chaos Testnet';
-    paramsObj.rpcUrls = [
-      'https://staging-v3.skalenodes.com/v1/staging-fast-active-bellatrix',
-    ];
-    paramsObj.nativeCurrency = {
-      name: 'sFUEL',
-      symbol: 'sFUEL',
-      decimals: 18,
-    };
-  }
-  // @ts-expect-error
-  const web3Provider = window.ethereum;
-  await addCustomNetwork(paramsObj);
-  await web3Provider.request({ method: 'eth_requestAccounts' });
-  injected.setProvider(web3Provider);
-  injected.getAccounts();
-  setInterval(() => {
-    injected.getAccounts();
-  }, 30000);
 };
 
 export const initInstance = async () => {
   const resp = await axios.get('/instance.json');
   await dispatch({ type: 'SET_INSTANCE', payload: resp.data });
-  await connect({ networkName: resp.data.network });
+  await dispatch({
+    type: 'SET_SETTINGS',
+    payload: { networkName: resp.data.network },
+  });
+  await setProvider({ networkName: resp.data.network, provider: 'metamask' });
 };
 
 export const saveSettings = async (payload: any) => {
@@ -151,7 +100,7 @@ export const runTransactions = async (payload: any) => {
     });
   }
 
-  const resp: any = await injected.runTx(
+  const resp: any = await txRunner.runTx(
     tx,
     '0x' + new BN(gasLimit, 10).toString(16),
     payload.lookupOnly

@@ -3,11 +3,14 @@ import Web3, {
   type EthExecutionAPI,
   type SupportedProviders,
   FMT_BYTES,
+  type Bytes,
 } from 'web3';
 import { addHexPrefix, toBuffer } from '@ethereumjs/util';
 import { execution } from '@remix-project/remix-lib';
 import { toBigInt } from 'web3-utils';
 import { saveSettings } from '../actions';
+
+const web3 = new Web3();
 
 export const shortenAddress = (address: string, etherBalance?: string) => {
   const len = address.length;
@@ -20,43 +23,51 @@ export const shortenAddress = (address: string, etherBalance?: string) => {
   );
 };
 
-// async function pause() {
-//   return await new Promise((resolve, reject) => {
-//     setTimeout(resolve, 500);
-//   });
-// }
+async function pause() {
+  return await new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000);
+  });
+}
 
-// async function tryTillReceiptAvailable(txhash: Bytes, web3: Web3) {
-//   try {
-//     const receipt = await web3.eth.getTransactionReceipt(txhash);
-//     if (receipt) {
-//       if (!receipt.to && !receipt.contractAddress) {
-//         // this is a contract creation and the receipt doesn't contain a contract address. we have to keep polling...
-//         console.log(
-//           'this is a contract creation and the receipt does nott contain a contract address. we have to keep polling...',
-//         );
-//         return receipt;
-//       } else return receipt;
-//     }
-//   } catch (e) {}
-//   await pause();
-//   // eslint-disable-next-line @typescript-eslint/return-await
-//   return await tryTillReceiptAvailable(txhash, web3);
-// }
+async function tryTillReceiptAvailable(txhash: Bytes) {
+  try {
+    const receipt = await web3.eth.getTransactionReceipt(txhash, {
+      number: FMT_NUMBER.NUMBER,
+      bytes: FMT_BYTES.HEX,
+    });
+    if (receipt) {
+      if (!receipt.to && !receipt.contractAddress) {
+        // this is a contract creation and the receipt doesn't contain a contract address. we have to keep polling...
+        console.log(
+          'this is a contract creation and the receipt does nott contain a contract address. we have to keep polling...'
+        );
+        return receipt;
+      } else return receipt;
+    }
+  } catch (e) {
+    /* empty */
+  }
+  await pause();
+  // eslint-disable-next-line @typescript-eslint/return-await
+  return await tryTillReceiptAvailable(txhash);
+}
 
-// async function tryTillTxAvailable(txhash: Bytes, web3: Web3) {
-//   try {
-//     const tx = await web3.eth.getTransaction(txhash);
-//     if (tx?.blockHash) return tx;
-//     return tx;
-//   } catch (e) {}
-//   // eslint-disable-next-line @typescript-eslint/return-await
-//   return await tryTillTxAvailable(txhash, web3);
-// }
+async function tryTillTxAvailable(txhash: Bytes) {
+  try {
+    const tx = await web3.eth.getTransaction(txhash, {
+      number: FMT_NUMBER.NUMBER,
+      bytes: FMT_BYTES.HEX,
+    });
+    if (tx?.blockHash) return tx;
+    return tx;
+  } catch (e) {
+    /* empty */
+  }
+  // eslint-disable-next-line @typescript-eslint/return-await
+  return await tryTillTxAvailable(txhash);
+}
 
-const web3 = new Web3();
-
-export class InjectedProvider {
+export class TxRunner {
   lastBlock: any;
   currentFork: string;
   listenOnLastBlockId: any;
@@ -73,6 +84,10 @@ export class InjectedProvider {
       '0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3';
 
     this.listenOnLastBlock();
+
+    setInterval(() => {
+      this.getAccounts();
+    }, 30000);
   }
 
   setProvider(
@@ -239,19 +254,15 @@ export class InjectedProvider {
         undefined,
         { checkRevertBeforeSending: false, ignoreGasPricing: true }
       );
-      const receipt = await web3.eth.getTransactionReceipt(transactionHash, {
-        number: FMT_NUMBER.NUMBER,
-        bytes: FMT_BYTES.HEX,
-      });
+      const receipt = await tryTillReceiptAvailable(transactionHash);
+      tx = await tryTillTxAvailable(transactionHash);
+
       currentDateTime = new Date();
       const end = currentDateTime.getTime() / 1000;
       console.log('tx duration', end - start);
       return {
         receipt,
-        tx: await web3.eth.getTransaction(transactionHash, {
-          number: FMT_NUMBER.NUMBER,
-          bytes: FMT_BYTES.HEX,
-        }),
+        tx,
         transactionHash: receipt ? receipt.transactionHash : null,
       };
     } catch (error: any) {
@@ -263,4 +274,4 @@ export class InjectedProvider {
   }
 }
 
-export default new InjectedProvider();
+export default new TxRunner();

@@ -15,39 +15,43 @@ export function SettingsUI() {
   const intl = useIntl();
   const { appState } = useContext(AppContext);
   const { balance, name, address, verified } = appState.instance;
+  const { provider } = appState.settings;
 
   return (
     <div className="px-4">
-      <div className="bg-light mt-3 mb-4 p-3">
-        <NetworkUI />
-        <div className="bg-transparent d-flex m-0 p-0 border-0 alert alert-secondary">
-          <div
-            className="input-grou w-100 flex-nowrap"
-            style={{ display: 'contents' }}
-          >
-            <div className="w-100 input-group-prepend">
+      <div className="bg-light mt-2 mb-4 p-3">
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="bg-transparent m-0 p-0 border-0 alert alert-secondary">
+            <div className="input-group-prepend">
               <span
                 className="input-group-text border-0 p-0 bg-transparent text-uppercase"
                 style={{ fontSize: 11 }}
               >
                 {name} at {shortenAddress(address)}
               </span>
+              <span className="btn p-0">
+                <CopyToClipboard
+                  tip={intl.formatMessage({ id: 'udapp.copy' })}
+                  content={address}
+                  direction={'top'}
+                />
+              </span>
             </div>
-            <div className="btn">
-              <CopyToClipboard
-                tip={intl.formatMessage({ id: 'udapp.copy' })}
-                content={address}
-                direction={'top'}
-              />
+            <div className="input-group-prepend">
+              <div
+                className="input-group-text border-0 p-0 bg-transparent text-uppercase"
+                style={{ fontSize: 11 }}
+              >
+                <FormattedMessage id="udapp.balance" />: {balance} ETH
+              </div>
             </div>
           </div>
+          <LocaleUI />
         </div>
-        <div className="d-flex" data-id="instanceContractBal">
-          <label>
-            <FormattedMessage id="udapp.balance" />: {balance} ETH
-          </label>
-        </div>
-        <AccountUI />
+      </div>
+      <div className="bg-light mt-3 mb-4 p-3">
+        <NetworkUI />
+        {provider === 'metamask' && <AccountUI />}
         <GasPriceUI />
         <ValueUI />
         {/* <ThemeUI /> */}

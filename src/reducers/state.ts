@@ -18,6 +18,7 @@ export const appInitialState: any = {
     error: null,
     selectedAccount: '',
     selectedLocaleCode: 'en',
+    provider: 'metamask',
   },
   terminal: { journalBlocks: [], hidden: false, height: 250 },
 };
