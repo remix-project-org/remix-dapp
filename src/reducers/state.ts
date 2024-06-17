@@ -18,7 +18,7 @@ export const appInitialState: any = {
     error: null,
     selectedAccount: '',
     selectedLocaleCode: 'en',
-    provider: 'metamask',
+    provider: window.ethereum ? 'metamask' : 'walletconnect',
   },
   terminal: { journalBlocks: [], hidden: false, height: 250 },
 };

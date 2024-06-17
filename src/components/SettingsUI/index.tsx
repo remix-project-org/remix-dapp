@@ -51,7 +51,7 @@ export function SettingsUI() {
       </div>
       <div className="bg-light mt-3 mb-4 p-3">
         <NetworkUI />
-        {provider === 'metamask' && <AccountUI />}
+        <AccountUI />
         <GasPriceUI />
         <ValueUI />
         {/* <ThemeUI /> */}

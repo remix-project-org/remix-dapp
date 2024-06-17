@@ -49,7 +49,10 @@ export const initInstance = async () => {
     type: 'SET_SETTINGS',
     payload: { networkName: resp.data.network },
   });
-  await setProvider({ networkName: resp.data.network, provider: 'metamask' });
+  await setProvider({
+    networkName: resp.data.network,
+    provider: window.ethereum ? 'metamask' : 'walletconnect',
+  });
 };
 
 export const saveSettings = async (payload: any) => {

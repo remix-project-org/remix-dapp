@@ -8,7 +8,8 @@ import { AppContext } from '../../contexts';
 export function AccountUI() {
   const intl = useIntl();
   const { appState, dispatch } = useContext(AppContext);
-  const { selectedAccount, loadedAccounts, isRequesting } = appState.settings;
+  const { selectedAccount, loadedAccounts, isRequesting, provider } =
+    appState.settings;
   const accounts = Object.keys(loadedAccounts);
 
   const setAccount = (account: string) => {
@@ -19,7 +20,7 @@ export function AccountUI() {
     if (!selectedAccount && accounts.length > 0) setAccount(accounts[0]);
   }, [accounts, selectedAccount]);
 
-  return (
+  return provider === 'metamask' ? (
     <div className="d-block mt-2">
       <label>
         <FormattedMessage id="udapp.account" />
@@ -53,5 +54,5 @@ export function AccountUI() {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }

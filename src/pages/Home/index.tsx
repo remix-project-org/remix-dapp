@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
         className="row m-0 pt-3"
         style={{ height: window.innerHeight - height - 5, overflowY: 'auto' }}
       >
-        <div className="col-9 d-inline-block pr-0">
+        <div className="col-xl-9 col-lg-8 col-md-7 d-inline-block pr-0">
           <div className="mx-3 my-2 p-3 w-auto bg-light d-flex justify-content-between">
             <div>
               {title && <h1>{title}</h1>}
@@ -85,7 +85,7 @@ const HomePage: React.FC = () => {
           </div>
           <UniversalDappUI />
         </div>
-        <div className="col-3 d-inline-block pl-0">
+        <div className="col-xl-3 col-lg-4 col-md-5 d-inline-block pl-0">
           <SettingsUI />
         </div>
       </div>
