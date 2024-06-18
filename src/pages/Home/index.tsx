@@ -39,30 +39,45 @@ const HomePage: React.FC = () => {
       >
         <SettingsUI />
       </div>
-      <ul className="nav justify-content-center fixed-bottom row bg-light">
+      <ul
+        className="nav nav-pills justify-content-center fixed-bottom row bg-light"
+        style={{ zIndex: 'auto' }}
+      >
         <li
-          className="nav-item col text-center p-2"
+          className={`nav-item col text-center p-2`}
           onClick={() => {
             setActive('functions');
           }}
         >
-          Functions
+          <span
+            className={`${active === 'functions' ? 'active' : ''} nav-link`}
+          >
+            Functions
+          </span>
         </li>
         <li
-          className="nav-item col text-center p-2"
+          className={`nav-item col text-center p-2`}
           onClick={() => {
             setActive('transactions');
           }}
         >
-          Transactions
+          <span
+            className={`${active === 'transactions' ? 'active' : ''} nav-link`}
+          >
+            Transactions
+          </span>
         </li>
         <li
-          className="nav-item col text-center p-2"
+          className={`${
+            active === 'settings' ? 'active' : ''
+          } nav-item col text-center p-2`}
           onClick={() => {
             setActive('settings');
           }}
         >
-          Settings
+          <span className={`${active === 'settings' ? 'active' : ''} nav-link`}>
+            Settings
+          </span>
         </li>
       </ul>
     </div>
