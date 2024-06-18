@@ -10,6 +10,7 @@ import CopyToClipboard from '../CopyToClipboard';
 import { shortenAddress } from '../UiHelper';
 import { AppContext } from '../../contexts';
 import { CustomTooltip } from '../CustomTooltip';
+import { isMobile } from '../../utils/tools';
 
 export function SettingsUI() {
   const intl = useIntl();
@@ -75,7 +76,7 @@ export function SettingsUI() {
             </CustomTooltip>
           </a>
         </span>
-        {verified && (
+        {!isMobile() && verified && (
           <a
             href={`https://remix.ethereum.org/address/${address}`}
             className="btn btn-primary"

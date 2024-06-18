@@ -1,88 +1,79 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UniversalDappUI } from '../../components/UniversalDappUI';
 import { SettingsUI } from '../../components/SettingsUI';
 import RemixUiTerminal from '../../components/UiTerminal';
 import DragBar from '../../components/DragBar';
+import DappTop from '../../components/DappTop';
 import { AppContext } from '../../contexts';
 import { initInstance } from '../../actions';
+import { isMobile } from '../../utils/tools';
+import TxList from '../../components/UiTerminal/TxList';
 
 const HomePage: React.FC = () => {
   const {
-    appState: { instance, terminal },
+    appState: { terminal },
   } = useContext(AppContext);
-  const { shareTo, title, details } = instance;
+  const [active, setActive] = useState('functions');
   const { height } = terminal;
   useEffect(() => {
     initInstance();
   }, []);
 
-  const getBoxPositionOnWindowCenter = (width: number, height: number) => ({
-    left:
-      window.outerWidth / 2 +
-      (window.screenX || window.screenLeft || 0) -
-      width / 2,
-    top:
-      window.outerHeight / 2 +
-      (window.screenY || window.screenTop || 0) -
-      height / 2,
-  });
-  let windowConfig: any = {
-    width: 600,
-    height: 400,
-  };
-  windowConfig = Object.assign(
-    windowConfig,
-    getBoxPositionOnWindowCenter(windowConfig.width, windowConfig.height)
-  );
-
-  const shareUrl = encodeURIComponent(window.origin);
-  const shareTitle = encodeURIComponent('Hello everyone, this is my dapp!');
-
-  return (
+  return isMobile() ? (
+    <div>
+      <div
+        className={`${
+          active === 'functions' ? '' : 'd-none'
+        } col-xl-9 col-lg-8 col-md-7 pr-0`}
+      >
+        <DappTop />
+        <UniversalDappUI />
+      </div>
+      <div className={`${active === 'transactions' ? '' : 'd-none'}`}>
+        <TxList />
+      </div>
+      <div
+        className={`${
+          active === 'settings' ? '' : 'd-none'
+        } col-xl-3 col-lg-4 col-md-5 pl-0`}
+      >
+        <SettingsUI />
+      </div>
+      <ul className="nav justify-content-center fixed-bottom row bg-light">
+        <li
+          className="nav-item col text-center p-2"
+          onClick={() => {
+            setActive('functions');
+          }}
+        >
+          Functions
+        </li>
+        <li
+          className="nav-item col text-center p-2"
+          onClick={() => {
+            setActive('transactions');
+          }}
+        >
+          Transactions
+        </li>
+        <li
+          className="nav-item col text-center p-2"
+          onClick={() => {
+            setActive('settings');
+          }}
+        >
+          Settings
+        </li>
+      </ul>
+    </div>
+  ) : (
     <div>
       <div
         className="row m-0 pt-3"
         style={{ height: window.innerHeight - height - 5, overflowY: 'auto' }}
       >
         <div className="col-xl-9 col-lg-8 col-md-7 d-inline-block pr-0">
-          <div className="mx-3 my-2 p-3 w-auto bg-light d-flex justify-content-between">
-            <div>
-              {title && <h1>{title}</h1>}
-              {details && <span>{details}</span>}
-            </div>
-            {shareTo && (
-              <div>
-                {shareTo.includes('twitter') && (
-                  <i
-                    className="fab fa-twitter btn"
-                    onClick={() => {
-                      window.open(
-                        `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`,
-                        '',
-                        Object.keys(windowConfig)
-                          .map((key) => `${key}=${windowConfig[key]}`)
-                          .join(', ')
-                      );
-                    }}
-                  />
-                )}
-                {shareTo.includes('facebook') && (
-                  <i
-                    className="fab fa-facebook btn"
-                    onClick={() => {
-                      window.open(
-                        `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                        '',
-                        Object.keys(windowConfig)
-                          .map((key) => `${key}=${windowConfig[key]}`)
-                          .join(', ')
-                      );
-                    }}
-                  />
-                )}
-              </div>
-            )}
-          </div>
+          <DappTop />
           <UniversalDappUI />
         </div>
         <div className="col-xl-3 col-lg-4 col-md-5 d-inline-block pl-0">

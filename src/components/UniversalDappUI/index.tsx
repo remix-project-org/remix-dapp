@@ -164,7 +164,7 @@ export function UniversalDappUI(props: any) {
       {containers
         ? containers.map((id: any) => {
             return (
-              <div className="col" key={id}>
+              <div className="col-md" key={id}>
                 {items[id].map((funcId: any, index: any) => {
                   const funcABI = contractABI[funcId];
                   if (funcABI.type !== 'function') return null;

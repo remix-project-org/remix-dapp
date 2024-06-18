@@ -8,11 +8,7 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 // import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import { CustomTooltip } from '../CustomTooltip';
-import RenderCall from './RenderCall';
-import RenderKnownTransactions from './RenderKnownTransactions';
-import parse from 'html-react-parser';
-
-import { KNOWN_TRANSACTION } from './types';
+import TxList from './TxList';
 
 import './index.css';
 import { AppContext } from '../../contexts';
@@ -24,9 +20,7 @@ export interface ClipboardEvent<T = Element> extends SyntheticEvent<T, any> {
 export const RemixUiTerminal = (props: any) => {
   const { appState, dispatch } = useContext(AppContext);
   const { journalBlocks, height, hidden } = appState.terminal;
-  const { shortname, name, address } = appState.instance;
 
-  const [showTableHash, setShowTableHash] = useState<any[]>([]);
   const [display, setDisplay] = useState('transaction');
 
   const messagesEndRef = useRef<any>(null);
@@ -50,26 +44,12 @@ export const RemixUiTerminal = (props: any) => {
   };
   /* start of autoComplete */
 
-  const txDetails = (event: any, tx: any) => {
-    if (showTableHash.includes(tx.hash)) {
-      const index = showTableHash.indexOf(tx.hash);
-      if (index > -1) {
-        setShowTableHash((prevState) => prevState.filter((x) => x !== tx.hash));
-      }
-    } else {
-      setShowTableHash((prevState) => [...prevState, tx.hash]);
-    }
-    scrollToBottom();
-  };
-
   const handleToggleTerminal = () => {
     dispatch({
       type: 'SET_TERMINAL',
       payload: { hidden: !hidden, height: hidden ? 250 : 35 },
     });
   };
-
-  const classNameBlock = 'remix_ui_terminal_block px-4 py-1 text-break';
 
   return (
     <div className="fixed-bottom" style={{ height }}>
@@ -170,167 +150,7 @@ export const RemixUiTerminal = (props: any) => {
                 display === 'transaction' ? 'd-flex' : 'd-none'
               }`}
             >
-              <div
-                id="journal"
-                className="remix_ui_terminal_journal d-flex flex-column pt-3 pb-4 px-2 ml-2 mr-0 mt-auto"
-                data-id="terminalJournal"
-              >
-                {journalBlocks?.map((x: any, index: number) => {
-                  if (x.name === KNOWN_TRANSACTION) {
-                    return x.message.map((trans: any) => {
-                      return (
-                        <div
-                          className={classNameBlock}
-                          data-id={`block_tx${trans.tx.hash}`}
-                          key={index}
-                        >
-                          {trans.tx.isCall ? (
-                            <RenderCall
-                              tx={trans.tx}
-                              resolvedData={trans.resolvedData}
-                              logs={trans.logs}
-                              index={index}
-                              showTableHash={showTableHash}
-                              txDetails={txDetails}
-                            />
-                          ) : (
-                            <RenderKnownTransactions
-                              tx={trans.tx}
-                              receipt={trans.receipt}
-                              resolvedData={trans.resolvedData}
-                              logs={trans.logs}
-                              index={index}
-                              showTableHash={showTableHash}
-                              txDetails={txDetails}
-                              provider={x.provider}
-                            />
-                          )}
-                        </div>
-                      );
-                    });
-                  } else if (Array.isArray(x.message)) {
-                    return x.message.map((msg: any, i: number) => {
-                      if (React.isValidElement(msg)) {
-                        return (
-                          <div className="px-4 block" data-id="block" key={i}>
-                            <span className={x.style}>{msg}</span>
-                          </div>
-                        );
-                      } else if (typeof msg === 'object') {
-                        if (msg.value && isHtml(msg.value)) {
-                          return (
-                            <div
-                              className={classNameBlock}
-                              data-id="block"
-                              key={i}
-                            >
-                              <span className={x.style}>
-                                {parse(msg.value)}{' '}
-                              </span>
-                            </div>
-                          );
-                        }
-                        let stringified;
-                        try {
-                          stringified = JSON.stringify(msg);
-                        } catch (e) {
-                          console.error(e);
-                          stringified = '< value not displayable >';
-                        }
-                        return (
-                          <div
-                            className={classNameBlock}
-                            data-id="block"
-                            key={i}
-                          >
-                            <span className={x.style}>{stringified} </span>
-                          </div>
-                        );
-                      } else {
-                        // typeWriterIndexes: we don't want to rerender using typewriter when the react component updates
-                        if (
-                          x.typewriter &&
-                          !typeWriterIndexes.current.includes(index)
-                        ) {
-                          typeWriterIndexes.current.push(index);
-                          return (
-                            <div
-                              className={classNameBlock}
-                              data-id="block"
-                              key={index}
-                            >
-                              <span
-                                ref={(element) => {
-                                  typewrite(
-                                    element,
-                                    msg ? msg.toString() : null,
-                                    () => {
-                                      scrollToBottom();
-                                    }
-                                  );
-                                }}
-                                className={x.style}
-                              ></span>
-                            </div>
-                          );
-                        } else {
-                          return (
-                            <div
-                              className={classNameBlock}
-                              data-id="block"
-                              key={i}
-                            >
-                              <span className={x.style}>
-                                {msg ? msg.toString() : null}
-                              </span>
-                            </div>
-                          );
-                        }
-                      }
-                    });
-                  } else {
-                    // typeWriterIndexes: we don't want to rerender using typewriter when the react component updates
-                    if (
-                      x.typewriter &&
-                      !typeWriterIndexes.current.includes(index)
-                    ) {
-                      typeWriterIndexes.current.push(index);
-                      return (
-                        <div
-                          className={classNameBlock}
-                          data-id="block"
-                          key={index}
-                        >
-                          {' '}
-                          <span
-                            ref={(element) => {
-                              typewrite(element, x.message, () => {
-                                scrollToBottom();
-                              });
-                            }}
-                            className={x.style}
-                          ></span>
-                        </div>
-                      );
-                    } else {
-                      if (typeof x.message !== 'function') {
-                        return (
-                          <div
-                            className={classNameBlock}
-                            data-id="block"
-                            key={index}
-                          >
-                            {' '}
-                            <span className={x.style}> {x.message}</span>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }
-                  }
-                })}
-                <div ref={messagesEndRef} />
-              </div>
+              <TxList />
             </div>
             {/* {shortname && (
               <div className={`p-3 ${display === 'comment' ? '' : 'd-none'}`}>
@@ -350,33 +170,5 @@ export const RemixUiTerminal = (props: any) => {
     </div>
   );
 };
-
-const typewrite = (elementsRef: any, message: any, callback: any) => {
-  (() => {
-    let count = 0;
-    const id = setInterval(() => {
-      if (!elementsRef) return;
-      count++;
-      elementsRef.innerText = message.substr(0, count);
-      // scroll when new line ` <br>
-      if (elementsRef.lastChild.tagName === `BR`) callback();
-      if (message.length === count) {
-        clearInterval(id);
-        callback();
-      }
-    }, 5);
-  })();
-};
-
-function isHtml(value: any) {
-  if (!value.indexOf) return false;
-  return (
-    value.indexOf('<div') !== -1 ||
-    value.indexOf('<span') !== -1 ||
-    value.indexOf('<p') !== -1 ||
-    value.indexOf('<label') !== -1 ||
-    value.indexOf('<b') !== -1
-  );
-}
 
 export default RemixUiTerminal;
