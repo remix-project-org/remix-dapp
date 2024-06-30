@@ -2,6 +2,8 @@ import React, { useEffect, useReducer } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
 import { IntlProvider } from 'react-intl';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AppContext } from './contexts';
 import { appInitialState, appReducer } from './reducers/state';
 import { initDispatch, updateState } from './actions';
@@ -42,6 +44,16 @@ function App(): JSX.Element {
         messages={localeMap[selectedLocaleCode]}
       >
         <RouterProvider router={router} />
+        <ToastContainer
+          position="bottom-right"
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </IntlProvider>
     </AppContext.Provider>
   );

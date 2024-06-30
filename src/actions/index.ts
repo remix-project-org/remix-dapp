@@ -2,6 +2,7 @@ import axios from 'axios';
 import Web3 from 'web3';
 import BN from 'bn.js';
 import { execution } from '@remix-project/remix-lib';
+import { toast } from 'react-toastify';
 import txRunner from '../utils/txRunner';
 import metamask from '../utils/metamask';
 import walletConnect from '../utils/walletConnect';
@@ -61,6 +62,14 @@ export const saveSettings = async (payload: any) => {
 
 export const log = async (payload: any) => {
   const journalBlocks = state.terminal.journalBlocks;
+  const { message, style } = payload;
+  if (style === 'text-log') {
+    toast.info(message[0]);
+  } else if (style === 'text-danger') {
+    toast.error(message[0]);
+  } else {
+    toast.success('success');
+  }
   await dispatch({
     type: 'SET_TERMINAL',
     payload: {
@@ -80,7 +89,7 @@ export const runTransactions = async (payload: any) => {
   if (error) {
     await log({
       message: [`${payload.logMsg} errored: ${error}`],
-      style: 'text-log',
+      style: 'text-danger',
     });
     return;
   }
@@ -112,7 +121,7 @@ export const runTransactions = async (payload: any) => {
   if (resp.error) {
     await log({
       message: [`${payload.logMsg} errored: ${resp.error}`],
-      style: 'text-log',
+      style: 'text-danger',
     });
     return;
   }
