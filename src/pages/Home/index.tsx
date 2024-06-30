@@ -11,7 +11,7 @@ import TxList from '../../components/UiTerminal/TxList';
 
 const HomePage: React.FC = () => {
   const {
-    appState: { terminal },
+    appState: { terminal, instance },
   } = useContext(AppContext);
   const [active, setActive] = useState('functions');
   const { height } = terminal;
@@ -29,9 +29,11 @@ const HomePage: React.FC = () => {
         <DappTop />
         <UniversalDappUI />
       </div>
-      <div className={`${active === 'transactions' ? '' : 'd-none'}`}>
-        <TxList />
-      </div>
+      {!instance.noTerminal && (
+        <div className={`${active === 'transactions' ? '' : 'd-none'}`}>
+          <TxList />
+        </div>
+      )}
       <div
         className={`${
           active === 'settings' ? '' : 'd-none'
@@ -55,18 +57,22 @@ const HomePage: React.FC = () => {
             Functions
           </span>
         </li>
-        <li
-          className={`nav-item col text-center p-2`}
-          onClick={() => {
-            setActive('transactions');
-          }}
-        >
-          <span
-            className={`${active === 'transactions' ? 'active' : ''} nav-link`}
+        {!instance.noTerminal && (
+          <li
+            className={`nav-item col text-center p-2`}
+            onClick={() => {
+              setActive('transactions');
+            }}
           >
-            Transactions
-          </span>
-        </li>
+            <span
+              className={`${
+                active === 'transactions' ? 'active' : ''
+              } nav-link`}
+            >
+              Transactions
+            </span>
+          </li>
+        )}
         <li
           className={`${
             active === 'settings' ? 'active' : ''
@@ -85,7 +91,12 @@ const HomePage: React.FC = () => {
     <div>
       <div
         className="row m-0 pt-3"
-        style={{ height: window.innerHeight - height - 5, overflowY: 'auto' }}
+        style={{
+          height: instance.noTerminal
+            ? window.innerHeight
+            : window.innerHeight - height - 5,
+          overflowY: 'auto',
+        }}
       >
         <div className="col-xl-9 col-lg-8 col-md-7 d-inline-block pr-0">
           <DappTop />
@@ -95,8 +106,12 @@ const HomePage: React.FC = () => {
           <SettingsUI />
         </div>
       </div>
-      <DragBar />
-      <RemixUiTerminal />
+      {!instance.noTerminal && (
+        <>
+          <DragBar />
+          <RemixUiTerminal />
+        </>
+      )}
     </div>
   );
 };

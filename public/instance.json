@@ -490,5 +490,6 @@
     "twitter",
     "facebook"
   ],
+  "noTerminal": false,
   "verified": true
 }
