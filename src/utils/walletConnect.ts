@@ -32,7 +32,6 @@ class WalletConnect {
     });
     this.ethersConfig = ethersConfig;
     this.chains = constants.chains;
-    this.subscribeToEvents();
   }
 
   subscribeToEvents() {

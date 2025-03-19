@@ -40,6 +40,7 @@ export const setProvider = async (payload: any) => {
 
   if (provider === 'walletconnect') {
     txRunner.setProvider(walletConnect as any);
+    walletConnect.subscribeToEvents();
   }
 };
 
